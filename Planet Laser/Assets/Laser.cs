@@ -5,6 +5,7 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     public Transform firepoint;
+    public GameObject lazer;
     
     void Start()
     {
@@ -19,6 +20,9 @@ public class Laser : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(firepoint.position, -Vector2.up);
 
         Debug.Log(hit.transform.position);
+        Instantiate(lazer, firepoint.position, Quaternion.identity);
+
+
 
     }
 
