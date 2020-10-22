@@ -13,7 +13,7 @@ public class redlazer : MonoBehaviour
 
     void Start()
     {
-        //InvokeRepeating("Lazer", 2, lazerTimer);
+
     }
 
     // Update is called once per frame
