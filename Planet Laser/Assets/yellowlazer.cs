@@ -2,25 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class redlazer : MonoBehaviour
+public class yellowlazer : MonoBehaviour
 {
-    public float lazerTimer = 1.5f;
     public Transform firepoint;
     public LineRenderer lazerrenderer;
+    public GameObject Mint;
 
+    private bool lazerOn = true;
     private RaycastHit2D hit;
-    private bool lazerOn = false;
 
     void Start()
     {
-
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (lazerOn)
-		{
+        {
             hit = Physics2D.Raycast(firepoint.position, -Vector2.up);
             lazerrenderer.enabled = true;
             lazerrenderer.SetPosition(0, firepoint.position);
@@ -30,24 +28,20 @@ public class redlazer : MonoBehaviour
             {
                 hitmint.Die();
             }
-		}
+        }
 		else
 		{
-            StartCoroutine(Lazer());
+			lazerrenderer.enabled = false;
+			lazerOn = false;
+		}
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(gameObject.transform.position, 1.5f);
+        for (int i = 0; i < hitColliders.Length; i++)
+        {
+            if (hitColliders[i].gameObject == Mint && Input.GetKeyDown(KeyCode.X))
+            {
+                lazerOn = !lazerOn;
+            }
         }
-    }
-
-    IEnumerator Lazer()
-    {
-        yield return new WaitForSeconds(lazerTimer);
-
-        lazerOn = true;
-
-        yield return new WaitForSeconds(lazerTimer);
-
-        lazerrenderer.enabled = false;
-        lazerOn = false;
-
     }
 
 }
