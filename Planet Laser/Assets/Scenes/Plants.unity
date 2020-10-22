@@ -1120,6 +1120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firepoint: {fileID: 689671303}
   lazerrenderer: {fileID: 2115094885}
+  Mint: {fileID: 21341864}
 --- !u!1 &2115094884
 GameObject:
   m_ObjectHideFlags: 0
