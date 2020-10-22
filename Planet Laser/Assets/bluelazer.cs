@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Laser : MonoBehaviour
+public class bluelazer : MonoBehaviour
 {
     public Transform firepoint;
-    public GameObject lazer;
     public LineRenderer lazerrenderer;
 
     private RaycastHit2D hit;
@@ -21,7 +20,6 @@ public class Laser : MonoBehaviour
     void Update()
     {
         RecalculateLazer();
-
     }
 
     void RecalculateLazer()
