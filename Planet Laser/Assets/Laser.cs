@@ -6,6 +6,7 @@ public class Laser : MonoBehaviour
 {
     public Transform firepoint;
     public GameObject lazer;
+    public LineRenderer lazerrenderer;
     
     void Start()
     {
@@ -20,9 +21,11 @@ public class Laser : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(firepoint.position, -Vector2.up);
 
         Debug.Log(hit.transform.position);
-        Instantiate(lazer, firepoint.position, Quaternion.identity);
+        // Instantiate(lazer, firepoint.position, Quaternion.identity);
 
-
+        lazerrenderer.SetPosition(0, firepoint.position);
+        lazerrenderer.SetPosition(1, hit.point);
+        lazerrenderer.SetWidth(2, 2);
 
     }
 
