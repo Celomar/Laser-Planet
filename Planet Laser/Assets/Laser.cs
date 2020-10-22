@@ -21,12 +21,17 @@ public class Laser : MonoBehaviour
     void Update()
     {
         RecalculateLazer();
+
     }
 
     void RecalculateLazer()
     {
         hit = Physics2D.Raycast(firepoint.position, -Vector2.up);
-        Debug.Log(hit.transform.name);
+        Mint hitmint = hit.transform.GetComponent<Mint>();
+		if (hitmint != null)
+		{
+            hitmint.Die();
+        }
     }
 }
 
