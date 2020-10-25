@@ -20,6 +20,12 @@ public class Mint : MonoBehaviour
         animator.SetFloat("horizontal", movement.x);
         animator.SetFloat("vertical", movement.y);
         animator.SetFloat("speed", movement.sqrMagnitude);
+
+        if(movement.sqrMagnitude > 0)
+		{
+            animator.SetFloat("lasthorizontal", movement.x);
+            animator.SetFloat("lastvertical", movement.y);
+        }
     }
 
     void FixedUpdate ()
