@@ -11,10 +11,6 @@ public class yellowlazer : MonoBehaviour
     private bool lazerOn = true;
     private RaycastHit2D hit;
 
-    void Start()
-    {
-    }
-
     void Update()
     {
         if (lazerOn)
@@ -23,10 +19,13 @@ public class yellowlazer : MonoBehaviour
             lazerrenderer.enabled = true;
             lazerrenderer.SetPosition(0, firepoint.position);
             lazerrenderer.SetPosition(1, hit.point);
-            Mint hitmint = hit.transform.GetComponent<Mint>();
-            if (hitmint != null)
+
+            if (hit)
             {
-                hitmint.Die();
+                if (hit.transform.tag == "hittable")
+                {
+                    hit.transform.SendMessage("HitByRay");
+                }
             }
         }
 		else

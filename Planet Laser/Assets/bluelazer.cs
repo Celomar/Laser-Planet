@@ -11,7 +11,7 @@ public class bluelazer : MonoBehaviour
 
     void Start()
     {
-        RecalculateLazer();
+        hit = Physics2D.Raycast(firepoint.position, -Vector2.up);
         lazerrenderer.enabled = true;
         lazerrenderer.SetPosition(0, firepoint.position);
         lazerrenderer.SetPosition(1, hit.point);
@@ -19,16 +19,13 @@ public class bluelazer : MonoBehaviour
 
     void Update()
     {
-        RecalculateLazer();
-    }
-
-    void RecalculateLazer()
-    {
         hit = Physics2D.Raycast(firepoint.position, -Vector2.up);
-        Mint hitmint = hit.transform.GetComponent<Mint>();
-		if (hitmint != null)
-		{
-            hitmint.Die();
+        if (hit)
+        {
+            if (hit.transform.tag == "hittable")
+            {
+                hit.transform.SendMessage("HitByRay");
+            }
         }
     }
 }

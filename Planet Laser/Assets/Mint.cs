@@ -38,5 +38,11 @@ public class Mint : MonoBehaviour
         //Instantiate(deatheffect, transform.position, Quaternion.identity);
         transform.position = startingpoint.position;
 	}
+ 
+    void HitByRay()
+	{
+        Die();
+	}
 }
+
 

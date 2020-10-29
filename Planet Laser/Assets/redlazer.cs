@@ -11,11 +11,6 @@ public class redlazer : MonoBehaviour
     private RaycastHit2D hit;
     private bool lazerOn = false;
 
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -25,11 +20,14 @@ public class redlazer : MonoBehaviour
             lazerrenderer.enabled = true;
             lazerrenderer.SetPosition(0, firepoint.position);
             lazerrenderer.SetPosition(1, hit.point);
-            Mint hitmint = hit.transform.GetComponent<Mint>();
-            if (hitmint != null)
-            {
-                hitmint.Die();
-            }
+
+			if (hit)
+			{
+                if (hit.transform.tag == "hittable")
+				{
+                    hit.transform.SendMessage("HitByRay");
+                }
+			}
 		}
 		else
 		{

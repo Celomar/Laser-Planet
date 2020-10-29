@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Yellow
   - Mint
+  - hittable
   layers:
   - Default
   - TransparentFX
