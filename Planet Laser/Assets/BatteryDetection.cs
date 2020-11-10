@@ -7,7 +7,7 @@ public class BatteryDetection : MonoBehaviour
     public GameObject door;
     CircleCollider2D doorcollider;
 
-    //private bool powerOn = false;
+    private bool hitLastframe = false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,11 +18,12 @@ public class BatteryDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        doorcollider.enabled = true;
+        doorcollider.enabled = !hitLastframe;
+        hitLastframe = false;
     }
 
     void HitByRay()
     {
-        doorcollider.enabled = false;
+        hitLastframe = true;
     }
 }
