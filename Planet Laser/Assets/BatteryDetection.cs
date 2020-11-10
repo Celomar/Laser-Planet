@@ -19,6 +19,18 @@ public class BatteryDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(doorcollider.enabled == hitLastframe)
+		{
+            if(doorcollider.enabled == true)
+			{
+                doorAnimator.SetTrigger("open");
+			}
+			else
+			{
+                doorAnimator.SetTrigger("close");
+            }
+		}
+
         doorcollider.enabled = !hitLastframe;
         hitLastframe = false;
     }

@@ -393,6 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 1244777313}
+  doorAnimator: {fileID: 1244777317}
 --- !u!95 &659258343
 Animator:
   serializedVersion: 3
