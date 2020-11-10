@@ -282,6 +282,7 @@ GameObject:
   - component: {fileID: 659258340}
   - component: {fileID: 659258339}
   - component: {fileID: 659258342}
+  - component: {fileID: 659258343}
   m_Layer: 0
   m_Name: Battery
   m_TagString: hittable
@@ -392,6 +393,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 1244777313}
+--- !u!95 &659258343
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659258338}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &689671302
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,6 +710,7 @@ GameObject:
   - component: {fileID: 1244777316}
   - component: {fileID: 1244777315}
   - component: {fileID: 1244777314}
+  - component: {fileID: 1244777317}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -777,6 +798,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1244777317
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244777313}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cfe8137047b114c4d88a04fcd8aa5318, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1269395749
 GameObject:
   m_ObjectHideFlags: 0

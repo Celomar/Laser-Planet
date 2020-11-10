@@ -5,6 +5,7 @@ using UnityEngine;
 public class BatteryDetection : MonoBehaviour
 {
     public GameObject door;
+    public Animator doorAnimator;
     CircleCollider2D doorcollider;
 
     private bool hitLastframe = false;
