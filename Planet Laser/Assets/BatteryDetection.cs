@@ -6,6 +6,7 @@ public class BatteryDetection : MonoBehaviour
 {
     public GameObject door;
     public Animator doorAnimator;
+    public Animator batteryAnimator;
     CircleCollider2D doorcollider;
 
     private bool hitLastframe = false;
@@ -32,6 +33,7 @@ public class BatteryDetection : MonoBehaviour
 		}
 
         doorcollider.enabled = !hitLastframe;
+        batteryAnimator.SetBool("On", hitLastframe);
         hitLastframe = false;
     }
 

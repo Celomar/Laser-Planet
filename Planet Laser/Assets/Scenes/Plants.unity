@@ -394,6 +394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 1244777313}
   doorAnimator: {fileID: 1244777317}
+  batteryAnimator: {fileID: 659258343}
 --- !u!95 &659258343
 Animator:
   serializedVersion: 3
@@ -404,7 +405,7 @@ Animator:
   m_GameObject: {fileID: 659258338}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9c495d7a3e48cca4198be73f7591a545, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
