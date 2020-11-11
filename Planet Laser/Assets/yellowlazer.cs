@@ -10,6 +10,7 @@ public class yellowlazer : MonoBehaviour
 
     private bool lazerOn = true;
     private RaycastHit2D hit;
+    private RaycastHit2D previoushit;
 
     void Update()
     {
@@ -18,15 +19,20 @@ public class yellowlazer : MonoBehaviour
             hit = Physics2D.Raycast(firepoint.position, -Vector2.up);
             lazerrenderer.enabled = true;
             lazerrenderer.SetPosition(0, firepoint.position);
-            lazerrenderer.SetPosition(1, hit.point);
 
             if (hit)
             {
                 if (hit.transform.tag == "hittable")
                 {
                     hit.transform.SendMessage("HitByRay");
+                    lazerrenderer.SetPosition(1, previoushit.point);
+                }
+                else
+                {
+                    lazerrenderer.SetPosition(1, hit.point);
                 }
             }
+            previoushit = hit;
         }
 		else
 		{

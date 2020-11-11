@@ -9,6 +9,7 @@ public class redlazer : MonoBehaviour
     public LineRenderer lazerrenderer;
 
     private RaycastHit2D hit;
+    private RaycastHit2D previoushit;
     private bool lazerOn = false;
 
     // Update is called once per frame
@@ -21,14 +22,20 @@ public class redlazer : MonoBehaviour
             lazerrenderer.SetPosition(0, firepoint.position);
             lazerrenderer.SetPosition(1, hit.point);
 
-			if (hit)
-			{
+            if (hit)
+            {
                 if (hit.transform.tag == "hittable")
-				{
+                {
                     hit.transform.SendMessage("HitByRay");
+                    lazerrenderer.SetPosition(1, previoushit.point);
                 }
-			}
-		}
+                else
+                {
+                    lazerrenderer.SetPosition(1, hit.point);
+                }
+            }
+            previoushit = hit;
+        }
 		else
 		{
             StartCoroutine(Lazer());

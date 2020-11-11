@@ -6,27 +6,36 @@ public class bluelazer : MonoBehaviour
 {
     public Transform firepoint;
     public LineRenderer lazerrenderer;
+    public Vector2 lazerdirection;
+    public Animator blueanimator;
 
     private RaycastHit2D hit;
+    private RaycastHit2D previoushit;
 
     void Start()
     {
-        hit = Physics2D.Raycast(firepoint.position, -Vector2.up);
+        blueanimator.SetFloat("X", lazerdirection.x);
+        blueanimator.SetFloat("Y", lazerdirection.y);
         lazerrenderer.enabled = true;
         lazerrenderer.SetPosition(0, firepoint.position);
-        lazerrenderer.SetPosition(1, hit.point);
     }
 
     void Update()
     {
-        hit = Physics2D.Raycast(firepoint.position, -Vector2.up);
+        hit = Physics2D.Raycast(firepoint.position, lazerdirection);
         if (hit)
         {
             if (hit.transform.tag == "hittable")
             {
-                hit.transform.SendMessage("HitByRay", -Vector2.up);
+                hit.transform.SendMessage("HitByRay");
+                lazerrenderer.SetPosition(1, previoushit.point);
+            }
+            else
+            {
+                lazerrenderer.SetPosition(1, hit.point);
             }
         }
+        previoushit = hit;
     }
 }
 
