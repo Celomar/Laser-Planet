@@ -24,7 +24,7 @@ public class bluelazer : MonoBehaviour
         {
             if (hit.transform.tag == "hittable")
             {
-                hit.transform.SendMessage("HitByRay");
+                hit.transform.SendMessage("HitByRay", -Vector2.up);
             }
         }
     }
