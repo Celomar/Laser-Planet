@@ -44,7 +44,6 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("projectile trigger enter");
         this.info.onHit.Invoke(this,other);
     }
 

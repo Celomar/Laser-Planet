@@ -26,7 +26,7 @@ public class Shooter : MonoBehaviour
         return proj;
     }
 
-    public Projectile[] ShootRadial(Projectile.Info projectileInfo, int count, float radius, float angleOffset)
+    public Projectile[] ShootRadial(Projectile.Info projectileInfo, int count, float radius, float angleOffset, Vector2? relativePosition = null)
     {
         Projectile[] projectiles = new Projectile[count];
 
@@ -40,6 +40,7 @@ public class Shooter : MonoBehaviour
                 Mathf.Sin(angle * Mathf.Deg2Rad)
             );
             Vector2 firepoint = currentInfo.direction * radius;
+            if(relativePosition != null) firepoint += (Vector2)relativePosition;
 
             projectiles[i] = this.Shoot(firepoint, currentInfo);
         }
