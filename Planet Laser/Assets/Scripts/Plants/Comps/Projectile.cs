@@ -22,7 +22,7 @@ public class Projectile : MonoBehaviour
     void FixedUpdate()
     {
         transform.position = Vector3.MoveTowards(transform.position, finalPosition, info.speed * Time.deltaTime);
-        if(IsAtFinalPosition()) ReachedFinalPosition();
+        if(isAtFinalPosition) ReachedFinalPosition();
     }
 
     private void CalculateFinalPosition()
@@ -31,16 +31,24 @@ public class Projectile : MonoBehaviour
         finalPosition = transform.position + dir * this.info.maxDistance;
     }
 
-    private bool IsAtFinalPosition()
+    private bool isAtFinalPosition
     {
-        float distSqrFromFinalPosition = (finalPosition - transform.position).sqrMagnitude;
-        const float margin = DIST_ERROR_MARGIN * DIST_ERROR_MARGIN;
-        return distSqrFromFinalPosition < margin;
+        get
+        {
+            float distSqrFromFinalPosition = (finalPosition - transform.position).sqrMagnitude;
+            const float margin = DIST_ERROR_MARGIN * DIST_ERROR_MARGIN;
+            return distSqrFromFinalPosition < margin;
+        }
     }
 
     protected virtual void ReachedFinalPosition()
     {
-        Debug.Log("Reached Goal");
+        End();
+    }
+
+    protected virtual void End()
+    {
+        Destroy(this.gameObject);
     }
 
     [System.Serializable]
