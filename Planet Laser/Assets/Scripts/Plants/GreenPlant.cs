@@ -19,6 +19,8 @@ public class GreenPlant : MonoBehaviour
     {
         shooter = GetComponent<Shooter>();
         nextBurst = Time.time + burstRate;
+        projectileInfo.onHit.RemoveListener(OnProjectileHit);
+        projectileInfo.onHit.AddListener(OnProjectileHit);
     }
 
     void Update()
@@ -34,5 +36,10 @@ public class GreenPlant : MonoBehaviour
     {
         shooter.ShootRadial(projectileInfo, projCount, projSpawnDist, projAngleOffset);
         nextBurst = Time.time + burstRate;
+    }
+
+    private void OnProjectileHit(Projectile projectile, Collider2D other)
+    {
+        Debug.Log(projectile.name + " is hitting " + other.gameObject.name);
     }
 }

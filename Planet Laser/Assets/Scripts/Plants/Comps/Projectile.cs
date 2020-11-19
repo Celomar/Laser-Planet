@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Events;
 
+[RequireComponent(typeof(Collider2D))]
 public class Projectile : MonoBehaviour
 {
     public const float DIST_ERROR_MARGIN = 0.1f;
 
+    [HideInInspector]
     public Info info;
 
     private Vector3 finalPosition = Vector3.zero;
@@ -41,6 +42,12 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("projectile trigger enter");
+        this.info.onHit.Invoke(this,other);
+    }
+
     protected virtual void ReachedFinalPosition()
     {
         End();
@@ -54,9 +61,13 @@ public class Projectile : MonoBehaviour
     [System.Serializable]
     public struct Info
     {
+        [System.Serializable]
+        public class OnHit : UnityEvent<Projectile,Collider2D> {}
+
         [HideInInspector]
         public Vector2 direction;
         public float speed;
         public float maxDistance;
+        public OnHit onHit;
     }
 }
