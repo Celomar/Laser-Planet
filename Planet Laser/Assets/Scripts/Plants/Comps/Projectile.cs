@@ -4,26 +4,51 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public ProjectileInfo info;
+    public const float DIST_ERROR_MARGIN = 0.1f;
 
-    public void SetupProjectile(ProjectileInfo info)
+    public Info info;
+
+    private Vector3 finalPosition = Vector3.zero;
+
+    public void SetupProjectile(Info info)
     {
         this.info = info;
+        // need to normalize para que los calculos
+        // donde se usa la dirección salgan as expected
+        this.info.direction.Normalize();    
+        CalculateFinalPosition();
     }
 
     void FixedUpdate()
     {
-        Vector3 translation = new Vector3(
-            info.direction.x * info.speed * Time.deltaTime,
-            info.direction.y * info.speed * Time.deltaTime,
-            0.0f
-        );
-        transform.Translate(translation);
+        transform.position = Vector3.MoveTowards(transform.position, finalPosition, info.speed * Time.deltaTime);
+        if(IsAtFinalPosition()) ReachedFinalPosition();
     }
 
-    public struct ProjectileInfo
+    private void CalculateFinalPosition()
     {
+        Vector3 dir = new Vector3(this.info.direction.x, this.info.direction.y, 0.0f);
+        finalPosition = transform.position + dir * this.info.maxDistance;
+    }
+
+    private bool IsAtFinalPosition()
+    {
+        float distSqrFromFinalPosition = (finalPosition - transform.position).sqrMagnitude;
+        const float margin = DIST_ERROR_MARGIN * DIST_ERROR_MARGIN;
+        return distSqrFromFinalPosition < margin;
+    }
+
+    protected virtual void ReachedFinalPosition()
+    {
+        Debug.Log("Reached Goal");
+    }
+
+    [System.Serializable]
+    public struct Info
+    {
+        [HideInInspector]
         public Vector2 direction;
         public float speed;
+        public float maxDistance;
     }
 }

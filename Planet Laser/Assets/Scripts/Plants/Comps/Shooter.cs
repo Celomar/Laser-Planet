@@ -14,37 +14,34 @@ public class Shooter : MonoBehaviour
         return proj;
     }
 
-    public Projectile Shoot(Vector2 firepoint, float speed, Vector2 direction)
+    public Projectile Shoot(Vector2 firepoint, Projectile.Info projectileInfo)
     {
         Projectile proj = SpawnProjectile(
             firepoint, 
-            Mathf.Atan2(direction.y, direction.x)
+            Mathf.Atan2(projectileInfo.direction.y, projectileInfo.direction.x)
         );
 
-        Projectile.ProjectileInfo info = new Projectile.ProjectileInfo();
-        info.speed = speed;
-        info.direction = direction;
-
-        proj.SetupProjectile(info);
+        proj.SetupProjectile(projectileInfo);
 
         return proj;
     }
 
-    public Projectile[] ShootRadial(float speed, int count, float radius, float angleOffset)
+    public Projectile[] ShootRadial(Projectile.Info projectileInfo, int count, float radius, float angleOffset)
     {
         Projectile[] projectiles = new Projectile[count];
 
         float angleIncrement = 360.0f / (float)count;
         for(int i = 0; i < count; i++)
         {
+            Projectile.Info currentInfo = projectileInfo;
             float angle = angleIncrement * (float)i + angleOffset;
-            Vector2 direction = new Vector2(
+            currentInfo.direction = new Vector2(
                 Mathf.Cos(angle * Mathf.Deg2Rad),
                 Mathf.Sin(angle * Mathf.Deg2Rad)
             );
-            Vector2 firepoint = direction * radius;
+            Vector2 firepoint = currentInfo.direction * radius;
 
-            projectiles[i] = this.Shoot(firepoint, speed, direction);
+            projectiles[i] = this.Shoot(firepoint, currentInfo);
         }
 
         return projectiles;

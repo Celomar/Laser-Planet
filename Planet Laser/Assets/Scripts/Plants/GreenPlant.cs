@@ -9,15 +9,16 @@ public class GreenPlant : MonoBehaviour
     private float nextBurst = 0.0f;
     public float burstRate = 0.3f;
 
-    public float projSpeed = 10.0f;
+    [Header("Projectile")]
     public int projCount = 8;
     public float projAngleOffset = 0.0f;
+    public float projSpawnDist = 0.7f;
+    public Projectile.Info projectileInfo;
 
     void Awake()
     {
         shooter = GetComponent<Shooter>();
         nextBurst = Time.time + burstRate;
-        Debug.Log(Time.time);
     }
 
     void Update()
@@ -31,7 +32,7 @@ public class GreenPlant : MonoBehaviour
 
     private void Burst()
     {
-        shooter.ShootRadial(projSpeed, projCount, 0.7f, projAngleOffset);
+        shooter.ShootRadial(projectileInfo, projCount, projSpawnDist, projAngleOffset);
         nextBurst = Time.time + burstRate;
     }
 }
