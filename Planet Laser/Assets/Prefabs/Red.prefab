@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 6952023623551856688}
   - component: {fileID: 6952023623551856689}
   - component: {fileID: 6952023623551856690}
+  - component: {fileID: 1494633586}
   m_Layer: 0
   m_Name: Red
   m_TagString: Untagged
@@ -257,3 +258,24 @@ MonoBehaviour:
   lazerTimer: 1.5
   firepoint: {fileID: 6952023622512423798}
   lazerrenderer: {fileID: 6952023623381549958}
+  lazerdirection: {x: 0, y: -1}
+  redanimator: {fileID: 1494633586}
+--- !u!95 &1494633586
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6952023623551856691}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 973940d0716ae9649af623468965736f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firepoint: {fileID: 2385869759447420447}
   lazerrenderer: {fileID: 2385869759883842536}
-  lazerdirection: {x: -1, y: 0}
+  lazerdirection: {x: 0, y: -1}
   blueanimator: {fileID: 1843990362}
 --- !u!95 &1843990362
 Animator:

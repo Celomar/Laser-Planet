@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 692243300511036663}
   - component: {fileID: 692243300511036662}
   - component: {fileID: 692243300511036660}
+  - component: {fileID: 1438110055}
   m_Layer: 0
   m_Name: Yellow
   m_TagString: Yellow
@@ -227,6 +228,28 @@ MonoBehaviour:
   firepoint: {fileID: 692243301307777861}
   lazerrenderer: {fileID: 7094803796348922740}
   Mint: {fileID: 0}
+  lazerdirection: {x: 0, y: -1}
+  yellowanimator: {fileID: 1438110055}
+  lazerOn: 0
+--- !u!95 &1438110055
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692243300511036657}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 50911fcee6c43e14fba45493af0fd835, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &692243301307777860
 GameObject:
   m_ObjectHideFlags: 0
