@@ -6,8 +6,6 @@ using UnityEngine;
 public class GreenPlant : MonoBehaviour
 {
     private Shooter shooter = null;
-    private float nextBurst = 0.0f;
-    public float burstRate = 0.3f;
     public Transform firepoint = null;
 
     [Header("Projectile")]
@@ -19,18 +17,8 @@ public class GreenPlant : MonoBehaviour
     void Awake()
     {
         shooter = GetComponent<Shooter>();
-        nextBurst = Time.time + burstRate;
         projectileInfo.onHit.RemoveListener(OnProjectileHit);
         projectileInfo.onHit.AddListener(OnProjectileHit);
-    }
-
-    void Update()
-    {
-        // shoot something every x seconds
-    	if( Time.time >= nextBurst )
-        {
-            Burst();
-        }
     }
 
     private void Burst()
@@ -42,7 +30,6 @@ public class GreenPlant : MonoBehaviour
             projAngleOffset, 
             firepoint.position
         );
-        nextBurst = Time.time + burstRate;
     }
 
     private void OnProjectileHit(Projectile projectile, Collider2D other)
