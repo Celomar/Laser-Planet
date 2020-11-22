@@ -34,6 +34,7 @@ public class GreenPlant : MonoBehaviour
 
     private void OnProjectileHit(Projectile projectile, Collider2D other)
     {
-        Debug.Log(projectile.name + " is hitting " + other.gameObject.name);
+        if(other.tag != "hittable" && other.name.ToLower() != "mint") return;
+        other.gameObject.SendMessage("HitByRay");
     }
 }
