@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public struct GridCell
 {
@@ -39,7 +40,7 @@ public class LevelsGrid : MonoBehaviour
         }
     }
 
-    public void SetupButtons(int start, int playable)
+    public void SetupButtons(int start, int count, int playable)
     {
         for(int i = 0; i < LEVELS_PER_GRID; i++)
         {
@@ -48,7 +49,7 @@ public class LevelsGrid : MonoBehaviour
             Debug.Assert(cell.text, "text is null");
             
             int level = start + i + 1;
-            cell.button.gameObject.SetActive(i < playable);
+            cell.button.gameObject.SetActive(i < count);
             cell.button.onClick.RemoveAllListeners();
             cell.button.onClick.AddListener( delegate() { LoadLevel(level); } );
 
@@ -58,6 +59,6 @@ public class LevelsGrid : MonoBehaviour
 
     private void LoadLevel(int level)
     {
-        Debug.Log(level);
+        SceneManager.LoadScene(level);
     }
 }

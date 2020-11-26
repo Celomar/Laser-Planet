@@ -20,8 +20,8 @@ public class LevelContainer : MonoBehaviour
         {
             LevelsGrid grid = Instantiate<LevelsGrid>(levelsGridPrefab, transform);
             int start = i * LevelsGrid.LEVELS_PER_GRID;
-            int playable = (levelCount - start) % LevelsGrid.LEVELS_PER_GRID;
-            grid.SetupButtons(start, playable);
+            int count = (levelCount - start) % LevelsGrid.LEVELS_PER_GRID;
+            grid.SetupButtons(start, count, count);
         }
     }
 
