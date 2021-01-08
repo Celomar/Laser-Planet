@@ -26,6 +26,12 @@ public class Mint : MonoBehaviour
             animator.SetFloat("lasthorizontal", movement.x);
             animator.SetFloat("lastvertical", movement.y);
         }
+
+        if (transform.childCount == 0) //Volver la velocidad normal
+        {
+            movementSpeed = 5f;
+            //Debug.Log("rapido");
+        }
     }
 
     void FixedUpdate ()
@@ -43,6 +49,15 @@ public class Mint : MonoBehaviour
 	{
         Die();
 	}
+
+    private void OnTriggerStay2D(Collider2D other) //Para disminuir la velocidad
+    {
+        if (Input.GetButton("Pick up"))
+        {
+            movementSpeed = 2.5f;
+            //Debug.Log("Lento");
+        }
+    }
 }
 
 
