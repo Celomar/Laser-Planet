@@ -25,7 +25,7 @@ public class Pot : MonoBehaviour
         
         GameObject pot;
         Transform astronauta;
-        Vector3 localPosition= new Vector3(1.008f,1.008f,0);
+        Vector3 localPosition= new Vector3(1.045f,1.045f,0);
 
         pot = this.gameObject;
         astronauta = other.transform; //Referencia al game object

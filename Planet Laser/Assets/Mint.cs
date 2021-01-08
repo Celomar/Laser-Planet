@@ -14,29 +14,38 @@ public class Mint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.x = Input.GetAxisRaw("Horizontal"); // puede ser -1 0 1
         movement.y = Input.GetAxisRaw("Vertical");
 
-        animator.SetFloat("horizontal", movement.x);
-        animator.SetFloat("vertical", movement.y);
-        animator.SetFloat("speed", movement.sqrMagnitude);
+        if (transform.childCount==0)
+        {
+            animator.SetFloat("horizontal", movement.x);
+            animator.SetFloat("vertical", movement.y);
 
-        if(movement.sqrMagnitude > 0)
-		{
-            animator.SetFloat("lasthorizontal", movement.x);
-            animator.SetFloat("lastvertical", movement.y);
+            if (movement.sqrMagnitude > 0)
+            {
+                animator.SetFloat("lasthorizontal", movement.x);
+                animator.SetFloat("lastvertical", movement.y);
+            }
+
         }
+
+        animator.SetFloat("speed", movement.sqrMagnitude);
 
         if (transform.childCount == 0) //Volver la velocidad normal
         {
             movementSpeed = 5f;
             //Debug.Log("rapido");
         }
+        else
+        {
+            movementSpeed = 1.5f;
+        }
     }
 
     void FixedUpdate ()
     {
-        rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime); //el tiempo entre la ultima vez que se llamo la funcion y ahora
     } 
 
     public void Die()
@@ -50,14 +59,6 @@ public class Mint : MonoBehaviour
         Die();
 	}
 
-    private void OnTriggerStay2D(Collider2D other) //Para disminuir la velocidad
-    {
-        if (Input.GetButton("Pick up"))
-        {
-            movementSpeed = 2.5f;
-            //Debug.Log("Lento");
-        }
-    }
 }
 
 
