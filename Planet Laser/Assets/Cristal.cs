@@ -25,70 +25,40 @@ public class Cristal : MonoBehaviour
 
     }
 
+    /// <param name="laserDirection">Normalized direction of the laser</param>
     public void GetLaserPoints(Vector2 laserDirection, ref List<Vector3> points)
     {
         points.Add(this.firepoint);
         Vector2 horizontalDir = this.GetDirection(true);
         Vector2 verticalDir = this.GetDirection(false);
 
-        // laser going left
-        if(laserDirection.x < 0.0f)
+        Vector2 redirectedDirection = Vector2.zero;
+        Cristal nextCristal = null;
+        Vector2 nextPoint = Vector2.zero;
+
+        // if horizontal direction and laser direction are exactly opposite
+        if(Vector2.Dot(horizontalDir, laserDirection) == -1.0f)
         {
-            // mirror pointing right
-            if(horizontalDir.x > 0.0f)
-            {
-                if(nextVerticalCristal)
-                {
-                    nextVerticalCristal.GetLaserPoints(
-                        verticalDir, 
-                        ref points);
-                }
-                else
-                {
-                    points.Add(verticalEndpoint);
-                }
-            }
+            nextCristal = nextVerticalCristal;
+            redirectedDirection = verticalDir;
+            nextPoint = verticalEndpoint;
         }
-        // laser going right
-        else if(laserDirection.x > 0.0f)
+        else if(Vector2.Dot(verticalDir, laserDirection) == -1.0f)
         {
-            // mirror looking left
-            if(horizontalDir.x < 0.0f)
-            {
-                if(nextVerticalCristal)
-                {
-                    nextVerticalCristal.GetLaserPoints(verticalDir, ref points);
-                }
-                else
-                {
-                    points.Add(verticalEndpoint);
-                }
-            }
+            nextCristal = nextHorizontalCristal;
+            redirectedDirection = horizontalDir;
+            nextPoint = horizontalEndpoint;
         }
-        else if(laserDirection.y < 0.0f)
+
+        if(nextCristal)
         {
-            if(verticalDir.y > 0.0f)
-            {
-                if(nextHorizontalCristal)
-                {
-                    nextHorizontalCristal.GetLaserPoints(horizontalDir, ref points);
-                }
-                else
-                {
-                    points.Add(horizontalEndpoint);
-                }
-            }
+            nextCristal.GetLaserPoints(redirectedDirection, ref points);
         }
-        else if(verticalDir.y < 0.0f)
+        // if sqrd mag > 0, it means it's not vector 0 anymore
+        // which means at least one of the conditions above passed
+        else if(nextPoint.sqrMagnitude > 0.0f)
         {
-            if(nextHorizontalCristal)
-            {
-                nextHorizontalCristal.GetLaserPoints(horizontalDir, ref points);
-            }
-            else
-            {
-                points.Add(horizontalEndpoint);
-            }
+            points.Add(nextPoint);
         }
     }
 
