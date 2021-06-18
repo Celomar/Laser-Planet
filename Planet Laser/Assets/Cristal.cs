@@ -28,16 +28,14 @@ public class Cristal : MonoBehaviour
     private void FindTargetObject(bool horizontal, out Cristal outCristal)
     {
         Vector2 outputDirection = GetDirection(horizontal);
-        Vector2 firepoint = new Vector2(transform.position.x, transform.position.y) + 
-                            (boxCollider.offset * transform.localScale);
         RaycastHit2D hit; 
         
+        Vector2 raycastOrigin = this.firepoint;
         do{
-            hit = Physics2D.Raycast(firepoint, outputDirection);
-            firepoint = hit.point + outputDirection * 0.002f;
-        } while(hit.transform == this.transform);
+            hit = Physics2D.Raycast(raycastOrigin, outputDirection);
+            raycastOrigin = hit.point + outputDirection * 0.002f;
+        } while(hit.transform == this.transform); // make sure the hit object is not us
 
-        // if we hit an object, and that object is not us
         if(hit.collider != null)
         {
             // try to get a cristal component from the object that was hit
@@ -73,5 +71,14 @@ public class Cristal : MonoBehaviour
         }
 
         return Vector2.zero;
+    }
+
+    public Vector2 firepoint
+    {
+        get{ 
+            // firepoint is at the center of the collider
+            return  new Vector2(transform.position.x, transform.position.y) + 
+                    (boxCollider.offset * transform.localScale); 
+        }
     }
 }
