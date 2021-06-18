@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Cristal : MonoBehaviour
 {
@@ -6,7 +7,9 @@ public class Cristal : MonoBehaviour
     [SerializeField] private BoxCollider2D boxCollider = null;
     
     private Cristal nextHorizontalCristal = null;
+    private Vector2 horizontalEndpoint = Vector2.zero;
     private Cristal nextVerticalCristal = null;
+    private Vector2 verticalEndpoint = Vector2.zero;
 
     private void Awake()
     {
@@ -17,12 +20,82 @@ public class Cristal : MonoBehaviour
         FindTargetedObjects();
     }
 
+    public void HitByRay(Vector2 laserDirection)
+    {
+
+    }
+
+    public void GetLaserPoints(Vector2 laserDirection, ref List<Vector3> points)
+    {
+        points.Add(this.firepoint);
+        Vector2 horizontalDir = this.GetDirection(true);
+        Vector2 verticalDir = this.GetDirection(false);
+
+        // laser going left
+        if(laserDirection.x < 0.0f)
+        {
+            // mirror pointing right
+            if(horizontalDir.x > 0.0f)
+            {
+                if(nextVerticalCristal)
+                {
+                    nextVerticalCristal.GetLaserPoints(
+                        verticalDir, 
+                        ref points);
+                }
+                else
+                {
+                    points.Add(verticalEndpoint);
+                }
+            }
+        }
+        // laser going right
+        else if(laserDirection.x > 0.0f)
+        {
+            // mirror looking left
+            if(horizontalDir.x < 0.0f)
+            {
+                if(nextVerticalCristal)
+                {
+                    nextVerticalCristal.GetLaserPoints(verticalDir, ref points);
+                }
+                else
+                {
+                    points.Add(verticalEndpoint);
+                }
+            }
+        }
+        else if(laserDirection.y < 0.0f)
+        {
+            if(verticalDir.y > 0.0f)
+            {
+                if(nextHorizontalCristal)
+                {
+                    nextHorizontalCristal.GetLaserPoints(horizontalDir, ref points);
+                }
+                else
+                {
+                    points.Add(horizontalEndpoint);
+                }
+            }
+        }
+        else if(verticalDir.y < 0.0f)
+        {
+            if(nextHorizontalCristal)
+            {
+                nextHorizontalCristal.GetLaserPoints(horizontalDir, ref points);
+            }
+            else
+            {
+                points.Add(horizontalEndpoint);
+            }
+        }
+    }
+
     private void FindTargetedObjects()
     {
         FindTargetObject(true, out nextHorizontalCristal);
         FindTargetObject(false, out nextVerticalCristal);
-
-        Debug.Log(transform.name + " hits:\n\thor: " + nextHorizontalCristal + "\n\tvert:" + nextVerticalCristal);
     }
 
     private void FindTargetObject(bool horizontal, out Cristal outCristal)
@@ -35,6 +108,9 @@ public class Cristal : MonoBehaviour
             hit = Physics2D.Raycast(raycastOrigin, outputDirection);
             raycastOrigin = hit.point + outputDirection * 0.002f;
         } while(hit.transform == this.transform); // make sure the hit object is not us
+
+        if(horizontal) horizontalEndpoint = hit.point;
+        else verticalEndpoint = hit.point;
 
         if(hit.collider != null)
         {
@@ -54,8 +130,8 @@ public class Cristal : MonoBehaviour
         {
             // local scale x will be 1 when looking to the right
             // and -1 when looking to the left
-            // note that this means the sprite should be looking
-            // to the right by default
+            // note that this means the original sprite should be 
+            // looking to the right by default
             return new Vector2(transform.localScale.x, 0.0f);
         }
 
@@ -75,7 +151,8 @@ public class Cristal : MonoBehaviour
 
     public Vector2 firepoint
     {
-        get{ 
+        get
+        { 
             // firepoint is at the center of the collider
             return  new Vector2(transform.position.x, transform.position.y) + 
                     (boxCollider.offset * transform.localScale); 

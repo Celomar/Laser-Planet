@@ -368,6 +368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rend: {fileID: 621069865}
+  boxCollider: {fileID: 0}
 --- !u!212 &621069865
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -426,7 +427,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 621069861}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.72, y: 0.57, z: 0}
+  m_LocalPosition: {x: -1.72, y: 0.57, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2096187090}
@@ -491,6 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rend: {fileID: 689719692}
+  boxCollider: {fileID: 0}
 --- !u!212 &689719692
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -549,7 +551,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 689719689}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.95, y: -4.73, z: 0}
+  m_LocalPosition: {x: 5.95, y: -4.73, z: -1}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 1074726691}
@@ -614,6 +616,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rend: {fileID: 747357235}
+  boxCollider: {fileID: 0}
 --- !u!212 &747357235
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -672,7 +675,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747357232}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.12, y: -10.29, z: 0}
+  m_LocalPosition: {x: 6.12, y: -10.29, z: -1}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 1242699336}
@@ -764,7 +767,7 @@ PrefabInstance:
     - target: {fileID: 2385869758790802990, guid: a4022017164c61c49a3013e7eed6785f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2385869758790802990, guid: a4022017164c61c49a3013e7eed6785f,
         type: 3}
@@ -815,6 +818,11 @@ PrefabInstance:
         type: 3}
       propertyPath: lazerdirection.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385869759883842536, guid: a4022017164c61c49a3013e7eed6785f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4022017164c61c49a3013e7eed6785f, type: 3}
@@ -1118,6 +1126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rend: {fileID: 1835657197}
+  boxCollider: {fileID: 0}
 --- !u!212 &1835657197
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1176,7 +1185,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835657194}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.72, y: -10.29, z: 0}
+  m_LocalPosition: {x: -1.72, y: -10.29, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1181954436}

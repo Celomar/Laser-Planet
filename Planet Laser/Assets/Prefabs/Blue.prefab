@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2385869758790802977}
   - component: {fileID: 2385869758790802976}
   - component: {fileID: 2385869758790802991}
+  - component: {fileID: 832529369698789560}
   - component: {fileID: 1843990362}
   m_Layer: 8
   m_Name: Blue
@@ -123,6 +124,21 @@ MonoBehaviour:
   lazerrenderer: {fileID: 2385869759883842536}
   lazerdirection: {x: 0, y: -1}
   blueanimator: {fileID: 1843990362}
+  laser: {fileID: 832529369698789560}
+--- !u!114 &832529369698789560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2385869758790802979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8df2e73fa655ca24481c07b4009ccc53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 2385869759883842536}
+  firepoint: {fileID: 2385869759447420447}
 --- !u!95 &1843990362
 Animator:
   serializedVersion: 3
