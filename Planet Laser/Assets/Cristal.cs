@@ -2,15 +2,18 @@
 
 public class Cristal : MonoBehaviour
 {
-    public Transform firepoint = null;
-
     [SerializeField] private SpriteRenderer rend = null;
+    [SerializeField] private BoxCollider2D boxCollider = null;
     
     private Cristal nextHorizontalCristal = null;
     private Cristal nextVerticalCristal = null;
 
     private void Awake()
     {
+        if(!boxCollider)
+        {
+            boxCollider = GetComponent<BoxCollider2D>();
+        }
         FindTargetedObjects();
     }
 
@@ -19,17 +22,23 @@ public class Cristal : MonoBehaviour
         FindTargetObject(true, out nextHorizontalCristal);
         FindTargetObject(false, out nextVerticalCristal);
 
-        Debug.Log("next horizontal cristal: " + nextHorizontalCristal);
-        Debug.Log("next vertical cristal: " + nextVerticalCristal);
+        Debug.Log(transform.name + " hits:\n\thor: " + nextHorizontalCristal + "\n\tvert:" + nextVerticalCristal);
     }
 
     private void FindTargetObject(bool horizontal, out Cristal outCristal)
     {
         Vector2 outputDirection = GetDirection(horizontal);
-        RaycastHit2D hit = Physics2D.Raycast(firepoint.position, outputDirection);
+        Vector2 firepoint = new Vector2(transform.position.x, transform.position.y) + 
+                            (boxCollider.offset * transform.localScale);
+        RaycastHit2D hit; 
+        
+        do{
+            hit = Physics2D.Raycast(firepoint, outputDirection);
+            firepoint = hit.point + outputDirection * 0.002f;
+        } while(hit.transform == this.transform);
 
         // if we hit an object, and that object is not us
-        if(hit.collider != null && hit.transform != this.transform)
+        if(hit.collider != null)
         {
             // try to get a cristal component from the object that was hit
             // outCristal will be null if the hit object does not have a cristal component
@@ -43,30 +52,26 @@ public class Cristal : MonoBehaviour
     {
         string spriteName = rend.sprite.name;
         
+        if(horizonal)
+        {
+            // local scale x will be 1 when looking to the right
+            // and -1 when looking to the left
+            // note that this means the sprite should be looking
+            // to the right by default
+            return new Vector2(transform.localScale.x, 0.0f);
+        }
+
         // b: bottom
         // t: top
-        // l: left
-        // r: right
-        if(spriteName.EndsWith("bl"))
+        if(spriteName.EndsWith("b"))
         {
-            if(horizonal) return new Vector2(-1.0f, 0.0f);
-            else return new Vector2(0.0f, -1.0f);
+            return new Vector2(0.0f, -1.0f);
         }
-        else if(spriteName.EndsWith("tl"))
+        else if(spriteName.EndsWith("t"))
         {
-            if(horizonal) return new Vector2(-1.0f, 0.0f);
-            else return new Vector2(0.0f, 1.0f);
+            return new Vector2(0.0f, 1.0f);
         }
-        else if(spriteName.EndsWith("br"))
-        {
-            if(horizonal) return new Vector2(1.0f, 0.0f);
-            else return new Vector2(0.0f, -1.0f);
-        }
-        else if(spriteName.EndsWith("tr"))
-        {
-            if(horizonal) return new Vector2(1.0f, 0.0f);
-            else return new Vector2(0.0f, 1.0f);
-        }
+
         return Vector2.zero;
     }
 }
