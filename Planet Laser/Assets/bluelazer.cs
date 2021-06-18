@@ -27,7 +27,7 @@ public class bluelazer : MonoBehaviour
         {
             if (hit.transform.tag == "hittable")
             {
-                hit.transform.SendMessage("HitByRay",lazerdirection);
+                // hit.transform.SendMessage("HitByRay",lazerdirection);
                 lazerrenderer.SetPosition(1, previoushit.point);
             }
             else
