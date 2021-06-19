@@ -15,19 +15,14 @@ public class Laser : MonoBehaviour
         
         if(hit.collider)
         {
-            if(hit.transform.tag == "hittable")
+            Cristal cristal = null;
+            if(hit.collider.gameObject.tag == "hittable")
             {
-                hit.transform.SendMessage("HitByRay", direction);
-
-                Cristal cristal = null;
-                if(hit.transform.TryGetComponent<Cristal>(out cristal))
-                {
-                    cristal.GetLaserPoints(direction, ref points);
-                }
-                else
-                {
-                    points.Add(hit.point);
-                }
+                hit.collider.gameObject.SendMessage("HitByRay", direction);
+            }
+            else if(hit.transform.TryGetComponent<Cristal>(out cristal))
+            {
+                cristal.GetLaserPoints(direction, ref points);
             }
             else
             {

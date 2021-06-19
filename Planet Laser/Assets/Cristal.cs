@@ -18,6 +18,9 @@ public class Cristal : MonoBehaviour
     private Cristal nextVerticalCristal = null;
     private Vector2 verticalEndpoint = Vector2.zero;
 
+    private GameObject horizontalObstacle = null;
+    private GameObject verticalObstacle = null;
+
     private void Awake()
     {
         if(!boxCollider)
@@ -25,11 +28,6 @@ public class Cristal : MonoBehaviour
             boxCollider = GetComponent<BoxCollider2D>();
         }
         reflectionDirections = this._reflectionDirections;
-    }
-
-    public void HitByRay(Vector2 laserDirection)
-    {
-
     }
 
     /// <param name="laserDirection">Normalized direction of the laser</param>
@@ -153,5 +151,15 @@ public class Cristal : MonoBehaviour
             rend.sprite = _reflectionDirections.y > 0.0f?
                 lookingUpSprite : lookingDownSprite;
         }
+    }
+
+    private void Raycast(Vector2 origin, Vector2 direction, out RaycastHit2D outHit)
+    {
+        Vector2 raycastOrigin = origin;
+        do
+        {
+            outHit = Physics2D.Raycast(raycastOrigin, direction);
+            raycastOrigin += direction * 0.002f;
+        } while(outHit.transform == this.transform);
     }
 }

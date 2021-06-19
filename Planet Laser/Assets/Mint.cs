@@ -10,9 +10,11 @@ public class Mint : MonoBehaviour
     public Animator animator;
     public Transform startingpoint;
 
+    private bool requestedInteraction = false;
+
     void Awake()
     {
-        InteractionCaller interactionCaller = GetComponent<InteractionCaller>();
+        InteractionCaller interactionCaller = GetComponentInChildren<InteractionCaller>();
         interactionCaller.wantsToInteract += WantsToInteract;
     }
 
@@ -22,7 +24,7 @@ public class Mint : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal"); // puede ser -1 0 1
         movement.y = Input.GetAxisRaw("Vertical");
 
-        if (transform.childCount==0)
+        if (transform.childCount <= 1)
         {
             animator.SetFloat("horizontal", movement.x);
             animator.SetFloat("vertical", movement.y);
@@ -37,7 +39,7 @@ public class Mint : MonoBehaviour
 
         animator.SetFloat("speed", movement.sqrMagnitude);
 
-        if (transform.childCount == 0) //Volver la velocidad normal
+        if (transform.childCount <= 1) //Volver la velocidad normal
         {
             movementSpeed = 5f;
             //Debug.Log("rapido");
@@ -46,6 +48,8 @@ public class Mint : MonoBehaviour
         {
             movementSpeed = 1.5f;
         }
+
+        requestedInteraction = Input.GetKeyDown(KeyCode.X);
     }
 
     void FixedUpdate ()
@@ -66,7 +70,7 @@ public class Mint : MonoBehaviour
 
     private bool WantsToInteract()
     {
-        return Input.GetKeyDown(KeyCode.X);
+        return requestedInteraction;
     }
 }
 
