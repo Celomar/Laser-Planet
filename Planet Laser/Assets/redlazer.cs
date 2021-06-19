@@ -23,24 +23,6 @@ public class redlazer : MonoBehaviour
         redanimator.SetBool("Open",lazerOn);
         if (lazerOn)
 		{
-            // hit = Physics2D.Raycast(firepoint.position, lazerdirection);
-            // lazerrenderer.enabled = true;
-            // lazerrenderer.SetPosition(0, firepoint.position);
-            // lazerrenderer.SetPosition(1, hit.point);
-
-            // if (hit)
-            // {
-            //     if (hit.transform.tag == "hittable")
-            //     {
-            //         hit.transform.SendMessage("HitByRay",lazerdirection);
-            //         lazerrenderer.SetPosition(1, previoushit.point);
-            //     }
-            //     else
-            //     {
-            //         lazerrenderer.SetPosition(1, hit.point);
-            //     }
-            // }
-            // previoushit = hit;
             laser.Shoot(lazerdirection);
         }
 		else

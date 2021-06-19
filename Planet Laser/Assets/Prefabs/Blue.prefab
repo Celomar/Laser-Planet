@@ -120,8 +120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3629b44c89b93494ca0b4f78f728e48f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firepoint: {fileID: 2385869759447420447}
-  lazerrenderer: {fileID: 2385869759883842536}
   lazerdirection: {x: 0, y: -1}
   blueanimator: {fileID: 1843990362}
   laser: {fileID: 832529369698789560}
@@ -226,7 +224,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2385869759883842539}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

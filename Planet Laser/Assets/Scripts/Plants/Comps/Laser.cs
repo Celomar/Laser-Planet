@@ -12,6 +12,7 @@ public class Laser : MonoBehaviour
         points.Add(firepoint.position);
 
         RaycastHit2D hit = Physics2D.Raycast(firepoint.position, direction);
+        
         if(hit.collider)
         {
             if(hit.transform.tag == "hittable")
@@ -22,6 +23,10 @@ public class Laser : MonoBehaviour
                 if(hit.transform.TryGetComponent<Cristal>(out cristal))
                 {
                     cristal.GetLaserPoints(direction, ref points);
+                }
+                else
+                {
+                    points.Add(hit.point);
                 }
             }
             else

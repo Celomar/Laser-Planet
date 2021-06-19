@@ -38,7 +38,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 652297789155251722}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 692243300511036663}
   - component: {fileID: 692243300511036662}
   - component: {fileID: 692243300511036660}
+  - component: {fileID: 8863168015172923126}
   - component: {fileID: 1438110055}
   m_Layer: 0
   m_Name: Yellow
@@ -225,12 +226,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3af3b3bd049cf3f4897893585f962a0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firepoint: {fileID: 692243301307777861}
-  lazerrenderer: {fileID: 7094803796348922740}
   Mint: {fileID: 0}
   lazerdirection: {x: 0, y: -1}
   yellowanimator: {fileID: 1438110055}
-  lazerOn: 0
+  laser: {fileID: 8863168015172923126}
+--- !u!114 &8863168015172923126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692243300511036657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8df2e73fa655ca24481c07b4009ccc53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 7094803796348922740}
+  firepoint: {fileID: 692243301307777861}
 --- !u!95 &1438110055
 Animator:
   serializedVersion: 3
