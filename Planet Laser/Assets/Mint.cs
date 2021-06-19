@@ -49,12 +49,12 @@ public class Mint : MonoBehaviour
             movementSpeed = 1.5f;
         }
 
-        requestedInteraction = Input.GetKeyDown(KeyCode.X);
     }
 
     void FixedUpdate ()
     {
         rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime); //el tiempo entre la ultima vez que se llamo la funcion y ahora
+        requestedInteraction = Input.GetKeyDown(KeyCode.X);
     } 
 
     public void Die()
