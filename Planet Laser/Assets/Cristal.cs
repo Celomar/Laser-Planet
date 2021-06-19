@@ -23,9 +23,6 @@ public class Cristal : MonoBehaviour
 
     private bool beingHitByLaser = false;
 
-    // private GameObject horizontalObstacle = null;
-    // private GameObject verticalObstacle = null;
-
     private void Awake()
     {
         if(!boxCollider)

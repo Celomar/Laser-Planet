@@ -8,32 +8,52 @@ public class redlazer : MonoBehaviour
     public Animator redanimator;
     public Laser laser = null;
     public float lazerTimer = 1.5f;
-    
-    private bool lazerOn = false;
+
+    private bool _keepShooting = false;
+    private Coroutine shootingCoroutine = null;
 
     void Start()
     {
         redanimator.SetFloat("X", lazerdirection.x);
         redanimator.SetFloat("Y", lazerdirection.y);
         laser.Shoot(lazerdirection);
+        _keepShooting = true;
+        shootingCoroutine = StartCoroutine(Lazer());
     }
 
-    // Update is called once per frame
     void Update()
     {
-        redanimator.SetBool("Open",lazerOn);
-        if (!lazerOn)
-		{
-            StartCoroutine(Lazer());
-        }
+        redanimator.SetBool("Open",laser.canShoot);
     }
 
     IEnumerator Lazer()
     {
-        yield return new WaitForSeconds(lazerTimer);
-        lazerOn = laser.canShoot = true;
-        yield return new WaitForSeconds(lazerTimer);
-        lazerOn = laser.canShoot = false;
+        while(_keepShooting)
+        {
+            yield return new WaitForSeconds(lazerTimer);
+            laser.canShoot = true;
+            yield return new WaitForSeconds(lazerTimer);
+            laser.canShoot = false;
+        }
     }
 
+    public bool keepShooting
+    {
+        get{ return _keepShooting; }
+        set
+        {
+            _keepShooting = value;
+            laser.canShoot = value;
+
+            if(value)
+            {
+                shootingCoroutine = StartCoroutine(Lazer());
+            }
+            else
+            {
+                StopCoroutine(shootingCoroutine);
+                shootingCoroutine = null;
+            }
+        }
+    }
 }
