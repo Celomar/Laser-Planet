@@ -13,9 +13,5 @@ public class bluelazer : MonoBehaviour
         blueanimator.SetFloat("Y", lazerdirection.y);
         laser.Shoot(lazerdirection);
     }
-
-    // void Update()
-    // {
-    // }
 }
 

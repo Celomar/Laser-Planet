@@ -17,8 +17,7 @@ public class redlazer : MonoBehaviour
         redanimator.SetFloat("X", lazerdirection.x);
         redanimator.SetFloat("Y", lazerdirection.y);
         laser.Shoot(lazerdirection);
-        _keepShooting = true;
-        shootingCoroutine = StartCoroutine(Lazer());
+        keepShooting = true;
     }
 
     void Update()
@@ -30,10 +29,10 @@ public class redlazer : MonoBehaviour
     {
         while(_keepShooting)
         {
-            yield return new WaitForSeconds(lazerTimer);
             laser.canShoot = true;
             yield return new WaitForSeconds(lazerTimer);
             laser.canShoot = false;
+            yield return new WaitForSeconds(lazerTimer);
         }
     }
 
@@ -44,15 +43,12 @@ public class redlazer : MonoBehaviour
         {
             _keepShooting = value;
             laser.canShoot = value;
+            if(shootingCoroutine != null) StopCoroutine(shootingCoroutine);
+            shootingCoroutine = null;
 
             if(value)
             {
                 shootingCoroutine = StartCoroutine(Lazer());
-            }
-            else
-            {
-                StopCoroutine(shootingCoroutine);
-                shootingCoroutine = null;
             }
         }
     }

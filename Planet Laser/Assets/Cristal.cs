@@ -15,11 +15,11 @@ public class Cristal : MonoBehaviour
     
     private Cristal nextHorizontalCristal = null;
     private Vector2 horizontalEndpoint = Vector2.zero;
-    [SerializeField] private Collider2D horizontalCollider = null;
+    [SerializeField] private LaserTrigger horizontalLaserTrigger = null;
     
     private Cristal nextVerticalCristal = null;
     private Vector2 verticalEndpoint = Vector2.zero;
-    [SerializeField] private Collider2D verticalCollider = null;
+    [SerializeField] private LaserTrigger verticalLaserTrigger = null;
 
     private bool beingHitByLaser = false;
 
@@ -100,24 +100,9 @@ public class Cristal : MonoBehaviour
         }
 
         if(horizontal)
-            MoveLaserTrigger(raycastOrigin, hit.point, horizontalCollider);
+            horizontalLaserTrigger.CalculateTransform(raycastOrigin, hit.point);
         else
-            MoveLaserTrigger(raycastOrigin, hit.point, verticalCollider);
-    }
-
-    private void MoveLaserTrigger(Vector2 laserStart, Vector2 laserEnd, Collider2D trigger)
-    {
-        Vector2 laserPosition = (laserStart + laserEnd) / 2.0f;
-        Transform triggerTransform = trigger.transform;
-        triggerTransform.position = new Vector3(laserPosition.x, laserPosition.y, transform.position.z);
-        
-        Vector2 differenceVector = laserEnd - laserStart;
-        Vector2 outputDirection = differenceVector.normalized;
-        Vector2 baseScale = new Vector2( 
-            1.0f - Mathf.Abs(outputDirection.x), 
-            1.0f - Mathf.Abs(outputDirection.y));
-        Vector2 scale = differenceVector + baseScale;
-        triggerTransform.localScale = new Vector3(scale.x, scale.y, 1.0f);
+            verticalLaserTrigger.CalculateTransform(raycastOrigin, hit.point);
     }
     
     public Vector2 GetDirection(bool horizonal)
