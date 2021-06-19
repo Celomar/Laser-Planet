@@ -5,7 +5,6 @@ public class Cristal : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer rend = null;
     [SerializeField] private BoxCollider2D boxCollider = null;
-    [SerializeField] private GameObject laserTriggerPrefab = null;
     [SerializeField] private Sprite lookingDownSprite = null;
     [SerializeField] private Sprite lookingUpSprite = null;
     
@@ -16,11 +15,14 @@ public class Cristal : MonoBehaviour
     
     private Cristal nextHorizontalCristal = null;
     private Vector2 horizontalEndpoint = Vector2.zero;
+    [SerializeField] private Collider2D horizontalCollider = null;
+    
     private Cristal nextVerticalCristal = null;
     private Vector2 verticalEndpoint = Vector2.zero;
+    [SerializeField] private Collider2D verticalCollider = null;
 
-    private GameObject horizontalObstacle = null;
-    private GameObject verticalObstacle = null;
+    // private GameObject horizontalObstacle = null;
+    // private GameObject verticalObstacle = null;
 
     private void Awake()
     {
@@ -96,17 +98,17 @@ public class Cristal : MonoBehaviour
             hit.transform.TryGetComponent<Cristal>(out outCristal);
         }
 
-        SpawnLaserTrigger(raycastOrigin, hit.point);
+        if(horizontal)
+            MoveLaserTrigger(raycastOrigin, hit.point, horizontalCollider);
+        else
+            MoveLaserTrigger(raycastOrigin, hit.point, verticalCollider);
     }
 
-    private void SpawnLaserTrigger(Vector2 laserStart, Vector2 laserEnd)
+    private void MoveLaserTrigger(Vector2 laserStart, Vector2 laserEnd, Collider2D trigger)
     {
         Vector2 laserPosition = (laserStart + laserEnd) / 2.0f;
-        GameObject spawnedLaser = Instantiate(
-            laserTriggerPrefab, 
-            new Vector3(laserPosition.x, laserPosition.y, transform.position.z), 
-            Quaternion.identity, 
-            transform);
+        Transform triggerTransform = trigger.transform;
+        triggerTransform.position = new Vector3(laserPosition.x, laserPosition.y, transform.position.z);
         
         Vector2 differenceVector = laserEnd - laserStart;
         Vector2 outputDirection = differenceVector.normalized;
@@ -114,7 +116,7 @@ public class Cristal : MonoBehaviour
             1.0f - Mathf.Abs(outputDirection.x), 
             1.0f - Mathf.Abs(outputDirection.y));
         Vector2 scale = differenceVector + baseScale;
-        spawnedLaser.transform.localScale = new Vector3(scale.x, scale.y, 1.0f);
+        triggerTransform.localScale = new Vector3(scale.x, scale.y, 1.0f);
     }
     
     public Vector2 GetDirection(bool horizonal)
