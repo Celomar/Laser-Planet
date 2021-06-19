@@ -5,6 +5,13 @@ public class Cristal : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer rend = null;
     [SerializeField] private BoxCollider2D boxCollider = null;
+    [SerializeField] private Sprite lookingDownSprite = null;
+    [SerializeField] private Sprite lookingUpSprite = null;
+    
+    // serialize field will make it writeable from the inspector
+    // we need it for our crystal editor
+    [SerializeField] [HideInInspector]
+    private Vector2 _reflectionDirections = new Vector2(1.0f, 0.0f);
     
     private Cristal nextHorizontalCristal = null;
     private Vector2 horizontalEndpoint = Vector2.zero;
@@ -17,7 +24,7 @@ public class Cristal : MonoBehaviour
         {
             boxCollider = GetComponent<BoxCollider2D>();
         }
-        FindTargetedObjects();
+        reflectionDirections = this._reflectionDirections;
     }
 
     public void HitByRay(Vector2 laserDirection)
@@ -94,29 +101,9 @@ public class Cristal : MonoBehaviour
     
     public Vector2 GetDirection(bool horizonal)
     {
-        string spriteName = rend.sprite.name;
-        
-        if(horizonal)
-        {
-            // local scale x will be 1 when looking to the right
-            // and -1 when looking to the left
-            // note that this means the original sprite should be 
-            // looking to the right by default
-            return new Vector2(transform.localScale.x, 0.0f);
-        }
-
-        // b: bottom
-        // t: top
-        if(spriteName.EndsWith("b"))
-        {
-            return new Vector2(0.0f, -1.0f);
-        }
-        else if(spriteName.EndsWith("t"))
-        {
-            return new Vector2(0.0f, 1.0f);
-        }
-
-        return Vector2.zero;
+        return horizonal?
+            new Vector2(horizonalDirection, 0.0f) :
+            new Vector2(0.0f, verticalDirection);
     }
 
     public Vector2 firepoint
@@ -126,6 +113,40 @@ public class Cristal : MonoBehaviour
             // firepoint is at the center of the collider
             return  new Vector2(transform.position.x, transform.position.y) + 
                     (boxCollider.offset * transform.localScale); 
+        }
+    }
+
+    public Vector2 reflectionDirections
+    {
+        get{ return _reflectionDirections; }
+        set
+        {
+            horizonalDirection = value.x;
+            verticalDirection = value.y;
+            FindTargetedObjects();
+        }
+    }
+
+    private float horizonalDirection
+    {
+        get{ return _reflectionDirections.x; }
+        set
+        { 
+            _reflectionDirections.x = Mathf.Sign(value); 
+            Vector3 scale = transform.localScale;
+            scale.x = _reflectionDirections.x;
+            transform.localScale = scale;
+        }
+    }
+
+    private float verticalDirection
+    {
+        get{ return _reflectionDirections.y; }
+        set
+        { 
+            _reflectionDirections.y = Mathf.Sign(value); 
+            rend.sprite = _reflectionDirections.y > 0.0f?
+                lookingUpSprite : lookingDownSprite;
         }
     }
 }
