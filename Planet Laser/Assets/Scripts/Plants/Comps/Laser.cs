@@ -7,6 +7,8 @@ public class Laser : MonoBehaviour
     public Transform firepoint = null;
 
     private event System.Action<bool> notifyStateChangeToSubscribers = null;
+    
+    public LaserTrigger laserTrigger = null;
 
     public void Shoot(Vector2 direction)
     {
@@ -39,6 +41,7 @@ public class Laser : MonoBehaviour
             points.Add(hit.point);
         }
 
+        laserTrigger.CalculateTransform(firepoint.position, hit.point);
         lineRenderer.positionCount = points.Count;
         lineRenderer.SetPositions(points.ToArray());
     }
@@ -56,5 +59,14 @@ public class Laser : MonoBehaviour
     public void AddSubscriber(System.Action<bool> action)
     {
         notifyStateChangeToSubscribers += action;
+    }
+
+    public void OnLaserTrigger(Collider2D other, LaserTrigger trigger)
+    {
+        if(canShoot && other.tag == "hittable")
+        {
+            Vector2 laserDirection = (trigger.transform.position - firepoint.position).normalized;
+            other.gameObject.SendMessage("HitByRay", laserDirection);
+        }
     }
 }

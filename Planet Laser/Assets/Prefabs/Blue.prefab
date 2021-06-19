@@ -34,6 +34,7 @@ Transform:
   m_Children:
   - {fileID: 2385869759447420447}
   - {fileID: 2385869759883842537}
+  - {fileID: 2132906433180536066}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -137,6 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 2385869759883842536}
   firepoint: {fileID: 2385869759447420447}
+  laserTrigger: {fileID: 6306747268834338103}
 --- !u!95 &1843990362
 Animator:
   serializedVersion: 3
@@ -314,3 +316,120 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!1001 &2482302001775262993
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2385869758790802990}
+    m_Modifications:
+    - target: {fileID: 4605902163704623122, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: m_Name
+      value: LaserTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605902163704623123, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605902163704623123, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605902163704623123, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605902163704623123, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605902163704623123, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605902163704623123, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605902163704623123, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605902163704623123, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605902163704623123, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605902163704623123, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605902163704623123, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8499692987537102886, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: onTrigger.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8499692987537102886, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: onTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8499692987537102886, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: onTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8499692987537102886, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: onTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 832529369698789560}
+    - target: {fileID: 8499692987537102886, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: onTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnLaserTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 8499692987537102886, guid: 81b80a5bae298a04299985269362b4cb,
+        type: 3}
+      propertyPath: onTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 81b80a5bae298a04299985269362b4cb, type: 3}
+--- !u!4 &2132906433180536066 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4605902163704623123, guid: 81b80a5bae298a04299985269362b4cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2482302001775262993}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6306747268834338103 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8499692987537102886, guid: 81b80a5bae298a04299985269362b4cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2482302001775262993}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811b601dddbda2542ace4728d9d03a24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

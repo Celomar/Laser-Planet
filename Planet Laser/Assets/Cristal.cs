@@ -107,7 +107,7 @@ public class Cristal : MonoBehaviour
 
     public void OnLaserTrigger(Collider2D other, LaserTrigger trigger)
     {
-        if(other.tag == "hittable")
+        if(beingHitByLaser && other.tag == "hittable")
         {
             Vector2 laserDirection = GetDirection(trigger == horizontalLaserTrigger);
             other.gameObject.SendMessage("HitByRay", laserDirection);
