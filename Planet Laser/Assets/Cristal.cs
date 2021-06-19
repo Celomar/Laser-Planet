@@ -104,6 +104,15 @@ public class Cristal : MonoBehaviour
         else
             verticalLaserTrigger.CalculateTransform(raycastOrigin, hit.point);
     }
+
+    public void OnLaserTrigger(Collider2D other, LaserTrigger trigger)
+    {
+        if(other.tag == "hittable")
+        {
+            Vector2 laserDirection = GetDirection(trigger == horizontalLaserTrigger);
+            other.gameObject.SendMessage("HitByRay", laserDirection);
+        }
+    }
     
     public Vector2 GetDirection(bool horizonal)
     {
@@ -174,6 +183,5 @@ public class Cristal : MonoBehaviour
     private void OnLaserStateChange(bool isOn)
     {
         beingHitByLaser = isOn;
-        Debug.Log("hit by laser: " + isOn);
     }
 }
