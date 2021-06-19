@@ -5,6 +5,7 @@ public class Cristal : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer rend = null;
     [SerializeField] private BoxCollider2D boxCollider = null;
+    [SerializeField] private GameObject laserTriggerPrefab = null;
     [SerializeField] private Sprite lookingDownSprite = null;
     [SerializeField] private Sprite lookingUpSprite = null;
     
@@ -81,20 +82,32 @@ public class Cristal : MonoBehaviour
         Vector2 raycastOrigin = this.firepoint;
         do{
             hit = Physics2D.Raycast(raycastOrigin, outputDirection);
-            raycastOrigin = hit.point + outputDirection * 0.002f;
+            raycastOrigin += outputDirection * 0.002f;
         } while(hit.transform == this.transform); // make sure the hit object is not us
 
         if(horizontal) horizontalEndpoint = hit.point;
         else verticalEndpoint = hit.point;
 
+        outCristal = null;
         if(hit.collider != null)
         {
             // try to get a cristal component from the object that was hit
             // outCristal will be null if the hit object does not have a cristal component
-            if(hit.transform.TryGetComponent<Cristal>(out outCristal))
-                return;
+            hit.transform.TryGetComponent<Cristal>(out outCristal);
         }
-        outCristal = null;
+
+        Vector2 laserPosition = (raycastOrigin + hit.point) / 2.0f;
+        GameObject spawnedLaser = Instantiate(
+            laserTriggerPrefab, 
+            new Vector3(laserPosition.x, laserPosition.y, transform.position.z), 
+            Quaternion.identity, 
+            transform);
+        Vector2 baseScale = new Vector2( 
+            1.0f - Mathf.Abs(outputDirection.x), 
+            1.0f - Mathf.Abs(outputDirection.y));
+        Vector2 scale = outputDirection * (hit.point - raycastOrigin).magnitude + 
+                        baseScale;
+        spawnedLaser.transform.localScale = new Vector3(scale.x, scale.y, 1.0f);
     }
     
     public Vector2 GetDirection(bool horizonal)

@@ -99,6 +99,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rend: {fileID: 3621988632359517447}
   boxCollider: {fileID: 3621988632359517449}
+  laserTriggerPrefab: {fileID: 4605902163704623122, guid: 81b80a5bae298a04299985269362b4cb,
+    type: 3}
   lookingDownSprite: {fileID: 21300000, guid: 9f482172c15552c48a195d691b9c90e9, type: 3}
   lookingUpSprite: {fileID: 21300000, guid: 7c8edb30de329fe4e8f42797385a806f, type: 3}
   _reflectionDirections: {x: 0, y: 0}
