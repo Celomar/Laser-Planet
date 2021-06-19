@@ -11,11 +11,11 @@ public class bluelazer : MonoBehaviour
     {
         blueanimator.SetFloat("X", lazerdirection.x);
         blueanimator.SetFloat("Y", lazerdirection.y);
-    }
-
-    void Update()
-    {
         laser.Shoot(lazerdirection);
     }
+
+    // void Update()
+    // {
+    // }
 }
 

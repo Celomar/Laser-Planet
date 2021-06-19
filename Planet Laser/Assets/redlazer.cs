@@ -15,17 +15,14 @@ public class redlazer : MonoBehaviour
     {
         redanimator.SetFloat("X", lazerdirection.x);
         redanimator.SetFloat("Y", lazerdirection.y);
+        laser.Shoot(lazerdirection);
     }
 
     // Update is called once per frame
     void Update()
     {
         redanimator.SetBool("Open",lazerOn);
-        if (lazerOn)
-		{
-            laser.Shoot(lazerdirection);
-        }
-		else
+        if (!lazerOn)
 		{
             StartCoroutine(Lazer());
         }
@@ -37,7 +34,6 @@ public class redlazer : MonoBehaviour
         lazerOn = laser.canShoot = true;
         yield return new WaitForSeconds(lazerTimer);
         lazerOn = laser.canShoot = false;
-
     }
 
 }

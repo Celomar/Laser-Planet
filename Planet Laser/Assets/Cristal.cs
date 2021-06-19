@@ -21,6 +21,8 @@ public class Cristal : MonoBehaviour
     private Vector2 verticalEndpoint = Vector2.zero;
     [SerializeField] private Collider2D verticalCollider = null;
 
+    private bool beingHitByLaser = false;
+
     // private GameObject horizontalObstacle = null;
     // private GameObject verticalObstacle = null;
 
@@ -34,8 +36,10 @@ public class Cristal : MonoBehaviour
     }
 
     /// <param name="laserDirection">Normalized direction of the laser</param>
-    public void GetLaserPoints(Vector2 laserDirection, ref List<Vector3> points)
+    public void GetLaserPoints(Vector2 laserDirection, ref List<Vector3> points, Laser laser)
     {
+        laser.AddSubscriber(OnLaserStateChange);
+
         points.Add(this.firepoint);
         Vector2 horizontalDir = this.GetDirection(true);
         Vector2 verticalDir = this.GetDirection(false);
@@ -60,7 +64,7 @@ public class Cristal : MonoBehaviour
 
         if(nextCristal)
         {
-            nextCristal.GetLaserPoints(redirectedDirection, ref points);
+            nextCristal.GetLaserPoints(redirectedDirection, ref points, laser);
         }
         // if sqrd mag > 0, it means it's not vector 0 anymore
         // which means at least one of the conditions above passed
@@ -183,5 +187,11 @@ public class Cristal : MonoBehaviour
             outHit = Physics2D.Raycast(raycastOrigin, direction);
             raycastOrigin += direction * 0.002f;
         } while(outHit.transform == this.transform);
+    }
+
+    private void OnLaserStateChange(bool isOn)
+    {
+        beingHitByLaser = isOn;
+        Debug.Log("hit by laser: " + isOn);
     }
 }
