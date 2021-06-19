@@ -96,17 +96,24 @@ public class Cristal : MonoBehaviour
             hit.transform.TryGetComponent<Cristal>(out outCristal);
         }
 
-        Vector2 laserPosition = (raycastOrigin + hit.point) / 2.0f;
+        SpawnLaserTrigger(raycastOrigin, hit.point);
+    }
+
+    private void SpawnLaserTrigger(Vector2 laserStart, Vector2 laserEnd)
+    {
+        Vector2 laserPosition = (laserStart + laserEnd) / 2.0f;
         GameObject spawnedLaser = Instantiate(
             laserTriggerPrefab, 
             new Vector3(laserPosition.x, laserPosition.y, transform.position.z), 
             Quaternion.identity, 
             transform);
+        
+        Vector2 differenceVector = laserEnd - laserStart;
+        Vector2 outputDirection = differenceVector.normalized;
         Vector2 baseScale = new Vector2( 
             1.0f - Mathf.Abs(outputDirection.x), 
             1.0f - Mathf.Abs(outputDirection.y));
-        Vector2 scale = outputDirection * (hit.point - raycastOrigin).magnitude + 
-                        baseScale;
+        Vector2 scale = differenceVector + baseScale;
         spawnedLaser.transform.localScale = new Vector3(scale.x, scale.y, 1.0f);
     }
     
