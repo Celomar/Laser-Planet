@@ -2,10 +2,14 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(Collider2D))]
 public class InteractibleObject : MonoBehaviour
 {
     static Dictionary<GameObject,InteractibleObject> interactibles = new Dictionary<GameObject, InteractibleObject>();
-    [SerializeField] private UnityEvent<GameObject> OnInteracted = null;
+
+    [System.Serializable]
+    public class InteractEvent : UnityEvent<GameObject> {}
+    [SerializeField] private InteractEvent OnInteracted = null;
 
     void Awake()
     {
@@ -17,7 +21,7 @@ public class InteractibleObject : MonoBehaviour
         OnInteracted?.Invoke(caller);
     }
 
-    public bool TryGetInteractible(GameObject obj, out InteractibleObject outInteractible)
+    public static bool TryGetInteractible(GameObject obj, out InteractibleObject outInteractible)
     {
         return interactibles.TryGetValue(obj, out outInteractible);
     }

@@ -10,6 +10,11 @@ public class Mint : MonoBehaviour
     public Animator animator;
     public Transform startingpoint;
 
+    void Awake()
+    {
+        InteractionCaller interactionCaller = GetComponent<InteractionCaller>();
+        interactionCaller.wantsToInteract += WantsToInteract;
+    }
 
     // Update is called once per frame
     void Update()
@@ -59,6 +64,10 @@ public class Mint : MonoBehaviour
         Die();
 	}
 
+    private bool WantsToInteract()
+    {
+        return Input.GetKeyDown(KeyCode.X);
+    }
 }
 
 

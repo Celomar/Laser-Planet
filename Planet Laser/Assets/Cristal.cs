@@ -116,6 +116,11 @@ public class Cristal : MonoBehaviour
         }
     }
 
+    public void Turn()
+    {
+        Debug.Log("turn");
+    }
+
     public Vector2 reflectionDirections
     {
         get{ return _reflectionDirections; }
