@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class redlazer : MonoBehaviour
 {
-    public float lazerTimer = 1.5f;
-    public Transform firepoint;
-    public LineRenderer lazerrenderer;
     public Vector2 lazerdirection;
     public Animator redanimator;
-
-    private RaycastHit2D hit;
-    private RaycastHit2D previoushit;
+    public Laser laser = null;
+    public float lazerTimer = 1.5f;
+    
     private bool lazerOn = false;
 
     void Start()
@@ -26,24 +23,25 @@ public class redlazer : MonoBehaviour
         redanimator.SetBool("Open",lazerOn);
         if (lazerOn)
 		{
-            hit = Physics2D.Raycast(firepoint.position, lazerdirection);
-            lazerrenderer.enabled = true;
-            lazerrenderer.SetPosition(0, firepoint.position);
-            lazerrenderer.SetPosition(1, hit.point);
+            // hit = Physics2D.Raycast(firepoint.position, lazerdirection);
+            // lazerrenderer.enabled = true;
+            // lazerrenderer.SetPosition(0, firepoint.position);
+            // lazerrenderer.SetPosition(1, hit.point);
 
-            if (hit)
-            {
-                if (hit.transform.tag == "hittable")
-                {
-                    hit.transform.SendMessage("HitByRay",lazerdirection);
-                    lazerrenderer.SetPosition(1, previoushit.point);
-                }
-                else
-                {
-                    lazerrenderer.SetPosition(1, hit.point);
-                }
-            }
-            previoushit = hit;
+            // if (hit)
+            // {
+            //     if (hit.transform.tag == "hittable")
+            //     {
+            //         hit.transform.SendMessage("HitByRay",lazerdirection);
+            //         lazerrenderer.SetPosition(1, previoushit.point);
+            //     }
+            //     else
+            //     {
+            //         lazerrenderer.SetPosition(1, hit.point);
+            //     }
+            // }
+            // previoushit = hit;
+            laser.Shoot(lazerdirection);
         }
 		else
 		{
@@ -54,13 +52,9 @@ public class redlazer : MonoBehaviour
     IEnumerator Lazer()
     {
         yield return new WaitForSeconds(lazerTimer);
-
-        lazerOn = true;
-
+        lazerOn = laser.canShoot = true;
         yield return new WaitForSeconds(lazerTimer);
-
-        lazerrenderer.enabled = false;
-        lazerOn = false;
+        lazerOn = laser.canShoot = false;
 
     }
 

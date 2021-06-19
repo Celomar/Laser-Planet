@@ -37,4 +37,10 @@ public class Laser : MonoBehaviour
         lineRenderer.positionCount = points.Count;
         lineRenderer.SetPositions(points.ToArray());
     }
+
+    public bool canShoot
+    {
+        get{ return this.lineRenderer.enabled; }
+        set{ this.lineRenderer.enabled = value; }
+    }
 }
