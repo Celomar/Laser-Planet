@@ -11,18 +11,22 @@ public class yellowlazer : MonoBehaviour
         yellowanimator.SetFloat("X", lazerdirection.x);
         yellowanimator.SetFloat("Y", lazerdirection.y);
         laser.Shoot(lazerdirection);
+        this.isShooting = true;
     }
 
     public void OnInteracted()
     {
-        Debug.Log("interacted");
-        this.laser.canShoot = !this.laser.canShoot;
+        this.isShooting = !this.isShooting;
     }
 
     public bool isShooting
     {
         get{ return this.laser.canShoot; }
-        set{ this.laser.canShoot = value; }
+        set
+        { 
+            this.yellowanimator.SetBool("Awake", value);
+            this.laser.canShoot = value; 
+        }
     }
 
 }
