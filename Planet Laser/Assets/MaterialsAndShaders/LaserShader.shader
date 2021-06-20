@@ -40,16 +40,19 @@
             fixed4 frag (v2f input) : SV_Target
             {
                 const float PI = 3.14159265f;
-                fixed4 multiplier = cos((_Time.y - input.uv.x) * 2.0 * PI * _LaserSpeed);
-                multiplier = (multiplier + 1.0) / 2.0;  // put it between 0 and 1
-                multiplier = lerp(1.0, _MinIntensity, multiplier);  // 0 to 1 value to interpolate between max and min intensities
                 
-                float verticalMultiplier = (cos(input.uv.y * 2.0 * PI) + 1.0) / 2.0; // add vertical highlight
+                float verticalMultiplier = (cos(input.uv.y * 2.0 * PI) + 1.0) / 2.0; // 1.0 to 0.0 to 1.0
                 fixed isOutline = fixed( verticalMultiplier >= 1.0 - _OutlinePortion );
-                verticalMultiplier = (1.0 - (1.0-verticalMultiplier) / _OutlinePortion) * isOutline;
+                // fall off, but within outline portion bounds
+                verticalMultiplier = (1.0 - (1.0-verticalMultiplier) / _OutlinePortion) * isOutline; 
+                
+                fixed4 multiplier = cos((_Time.y - input.uv.x) * 2.0 * PI * _LaserSpeed);
+                multiplier = (multiplier + 1.0) / 2.0;
+                multiplier = lerp(1.0, _MinIntensity, multiplier);
+                multiplier = lerp(multiplier,1.0,isOutline);
                 
                 fixed4 color = lerp(_InnerColor, _OutlineColor, verticalMultiplier);
-                return color;
+                return color * multiplier;
             }
             ENDCG
         }
