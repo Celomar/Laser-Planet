@@ -473,6 +473,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2385869759883842536, guid: a4022017164c61c49a3013e7eed6785f,
         type: 3}
+      propertyPath: m_Positions.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385869759883842536, guid: a4022017164c61c49a3013e7eed6785f,
+        type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -489,12 +494,12 @@ PrefabInstance:
     - target: {fileID: 2385869759883842536, guid: a4022017164c61c49a3013e7eed6785f,
         type: 3}
       propertyPath: m_Positions.Array.data[0].y
-      value: -7.82
+      value: -7.74
       objectReference: {fileID: 0}
     - target: {fileID: 2385869759883842536, guid: a4022017164c61c49a3013e7eed6785f,
         type: 3}
       propertyPath: m_Positions.Array.data[0].x
-      value: -9.36
+      value: 13.24
       objectReference: {fileID: 0}
     - target: {fileID: 2385869759883842536, guid: a4022017164c61c49a3013e7eed6785f,
         type: 3}
@@ -504,7 +509,32 @@ PrefabInstance:
     - target: {fileID: 2385869759883842536, guid: a4022017164c61c49a3013e7eed6785f,
         type: 3}
       propertyPath: m_Positions.Array.data[1].x
-      value: 13.24
+      value: -4.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385869759883842536, guid: a4022017164c61c49a3013e7eed6785f,
+        type: 3}
+      propertyPath: m_Parameters.textureMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385869759883842536, guid: a4022017164c61c49a3013e7eed6785f,
+        type: 3}
+      propertyPath: m_Positions.Array.data[2].x
+      value: -4.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385869759883842536, guid: a4022017164c61c49a3013e7eed6785f,
+        type: 3}
+      propertyPath: m_Positions.Array.data[2].y
+      value: 3.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385869759883842536, guid: a4022017164c61c49a3013e7eed6785f,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385869759883842536, guid: a4022017164c61c49a3013e7eed6785f,
+        type: 3}
+      propertyPath: m_UseWorldSpace
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4022017164c61c49a3013e7eed6785f, type: 3}
