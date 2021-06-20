@@ -4,6 +4,7 @@
     {
         // Color property for material inspector, default to white
         _InnerColor ("Inner Color", Color) = (1,1,1,1)
+        _BrightInnerColor ("Bright Inner Color", Color) = (1,1,1,1)
         _OutlineColor ("Outline Color", Color) = (1,1,1,1)
         _OutlinePortion ("Outline Portion", Range(0.0,1.0)) = 0.1
         _MinIntensity ("Min Intensity", Range(0.0,1.0)) = 0.4
@@ -32,6 +33,7 @@
             }
             
             fixed4 _InnerColor;
+            fixed4 _BrightInnerColor;
             fixed4 _OutlineColor;
             fixed _OutlinePortion;
             fixed _MinIntensity;
@@ -50,9 +52,10 @@
                 multiplier = (multiplier + 1.0) / 2.0;
                 multiplier = lerp(1.0, _MinIntensity, multiplier);
                 multiplier = lerp(multiplier,1.0,isOutline);
+                fixed4 innerColor = lerp(_InnerColor, _BrightInnerColor, multiplier);
                 
-                fixed4 color = lerp(_InnerColor, _OutlineColor, verticalMultiplier);
-                return color * multiplier;
+                fixed4 color = lerp(innerColor, _OutlineColor, verticalMultiplier);
+                return color;
             }
             ENDCG
         }

@@ -63,9 +63,9 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LaserSpeed: 1
+    - _LaserSpeed: 3.66
     - _Metallic: 0
-    - _MinIntensity: 0.9
+    - _MinIntensity: 0.469
     - _Mode: 0
     - _OcclusionStrength: 1
     - _OutlinePortion: 0.228
@@ -77,7 +77,8 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BrightInnerColor: {r: 0.75, g: 0.9804555, b: 1, a: 1}
     - _Color: {r: 0.2947668, g: 0.6446683, b: 0.9056604, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _InnerColor: {r: 0.6367924, g: 0.93757373, b: 1, a: 1}
+    - _InnerColor: {r: 0, g: 0.37680292, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0.49411765, b: 1, a: 1}

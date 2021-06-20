@@ -22,6 +22,7 @@ public class Cristal : MonoBehaviour
     [SerializeField] private LaserTrigger verticalLaserTrigger = null;
 
     private bool beingHitByLaser = false;
+    private HashSet<Laser> hittingLasers = new HashSet<Laser>();
 
     private void Awake()
     {
@@ -36,6 +37,7 @@ public class Cristal : MonoBehaviour
     public void GetLaserPoints(Vector2 laserDirection, ref List<Vector3> points, Laser laser)
     {
         laser.AddSubscriber(OnLaserStateChange);
+        hittingLasers.Add(laser);
 
         points.Add(this.firepoint);
         Vector2 horizontalDir = this.GetDirection(true);
@@ -73,23 +75,21 @@ public class Cristal : MonoBehaviour
 
     private void FindTargetedObjects()
     {
-        FindTargetObject(true, out nextHorizontalCristal);
-        FindTargetObject(false, out nextVerticalCristal);
+        FindTargetObject(true, out nextHorizontalCristal, out horizontalEndpoint, ref horizontalLaserTrigger);
+        FindTargetObject(false, out nextVerticalCristal, out verticalEndpoint, ref verticalLaserTrigger);
     }
 
-    private void FindTargetObject(bool horizontal, out Cristal outCristal)
+    private void FindTargetObject(bool horizontal, out Cristal outCristal, out Vector2 outHitpoint, ref LaserTrigger laserTrigger)
     {
         Vector2 outputDirection = GetDirection(horizontal);
-        RaycastHit2D hit; 
+        RaycastHit2D hit;
         
         Vector2 raycastOrigin = this.firepoint;
         do{
             hit = Physics2D.Raycast(raycastOrigin, outputDirection);
             raycastOrigin += outputDirection * 0.002f;
         } while(hit.transform == this.transform); // make sure the hit object is not us
-
-        if(horizontal) horizontalEndpoint = hit.point;
-        else verticalEndpoint = hit.point;
+        outHitpoint = hit.point;
 
         outCristal = null;
         if(hit.collider != null)
@@ -99,10 +99,7 @@ public class Cristal : MonoBehaviour
             hit.transform.TryGetComponent<Cristal>(out outCristal);
         }
 
-        if(horizontal)
-            horizontalLaserTrigger.CalculateTransform(raycastOrigin, hit.point);
-        else
-            verticalLaserTrigger.CalculateTransform(raycastOrigin, hit.point);
+        laserTrigger.CalculateTransform(raycastOrigin, hit.point);
     }
 
     public void OnLaserTrigger(Collider2D other, LaserTrigger trigger)
@@ -133,7 +130,16 @@ public class Cristal : MonoBehaviour
 
     public void Turn()
     {
-        Debug.Log("turn");
+        Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, 90.0f);
+        reflectionDirections = rotation * reflectionDirections; // apply ccw rotation of 90 degrees
+        
+        // we have to copy the set somewhere else, because the set will change when calling shoot on laser
+        Laser[] lasers = new Laser[hittingLasers.Count]; 
+        hittingLasers.CopyTo(lasers);
+        hittingLasers.Clear();
+
+        foreach(Laser l in lasers)
+            l.Shoot(Vector2.zero);
     }
 
     public Vector2 reflectionDirections
@@ -180,8 +186,9 @@ public class Cristal : MonoBehaviour
         } while(outHit.transform == this.transform);
     }
 
-    private void OnLaserStateChange(bool isOn)
+    private void OnLaserStateChange(Laser laser, bool isOn)
     {
         beingHitByLaser = isOn;
+        if(!isOn) hittingLasers.Remove(laser);
     }
 }

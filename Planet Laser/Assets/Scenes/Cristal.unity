@@ -490,7 +490,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d63d2b4794471f7468d9877acf41323f, type: 2}
+      objectReference: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 2385869759883842536, guid: a4022017164c61c49a3013e7eed6785f,
         type: 3}
       propertyPath: m_Positions.Array.data[0].y
@@ -1380,6 +1380,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626283616423707516, guid: 11e1ade6513c65f4b85598a0a0c80ee7,
+        type: 3}
+      propertyPath: m_Radius
+      value: 2.38
       objectReference: {fileID: 0}
     - target: {fileID: 8113245582794197654, guid: 11e1ade6513c65f4b85598a0a0c80ee7,
         type: 3}

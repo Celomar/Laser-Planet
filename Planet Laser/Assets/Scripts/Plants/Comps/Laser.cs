@@ -6,13 +6,18 @@ public class Laser : MonoBehaviour
     [SerializeField] private LineRenderer lineRenderer = null;
     public Transform firepoint = null;
 
-    private event System.Action<bool> notifyStateChangeToSubscribers = null;
+    private event System.Action<Laser,bool> notifyStateChangeToSubscribers = null;
     
     public LaserTrigger laserTrigger = null;
+    private Vector2 currentDirection = Vector2.zero;
 
     public void Shoot(Vector2 direction)
     {
-        notifyStateChangeToSubscribers?.Invoke(false);
+        if(direction == Vector2.zero)
+            direction = currentDirection;
+        currentDirection = direction;
+
+        notifyStateChangeToSubscribers?.Invoke(this,false);
         notifyStateChangeToSubscribers = null;
 
         List<Vector3> points = new List<Vector3>();
@@ -52,11 +57,11 @@ public class Laser : MonoBehaviour
         set
         { 
             this.lineRenderer.enabled = value; 
-            notifyStateChangeToSubscribers?.Invoke(value);
+            notifyStateChangeToSubscribers?.Invoke(this,value);
         }
     }
 
-    public void AddSubscriber(System.Action<bool> action)
+    public void AddSubscriber(System.Action<Laser,bool> action)
     {
         notifyStateChangeToSubscribers += action;
     }
