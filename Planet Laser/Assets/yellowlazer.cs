@@ -2,7 +2,6 @@
 
 public class yellowlazer : MonoBehaviour
 {
-    public GameObject Mint;
     public Vector2 lazerdirection;
     public Animator yellowanimator;
     public Laser laser = null;
@@ -14,19 +13,10 @@ public class yellowlazer : MonoBehaviour
         laser.Shoot(lazerdirection);
     }
 
-    void Update()
+    public void OnInteracted()
     {
-        bool laserOn = laser.canShoot;
-        yellowanimator.SetBool("Awake", laserOn);
-
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(gameObject.transform.position, 1.5f);
-        for (int i = 0; i < hitColliders.Length; i++)
-        {
-            if (hitColliders[i].gameObject == Mint && Input.GetKeyDown(KeyCode.X))
-            {
-                this.laser.canShoot = !laserOn;
-            }
-        }
+        Debug.Log("interacted");
+        this.laser.canShoot = !this.laser.canShoot;
     }
 
     public bool isShooting
