@@ -186,9 +186,10 @@ public class Cristal : MonoBehaviour
         } while(outHit.transform == this.transform);
     }
 
-    private void OnLaserStateChange(Laser laser, bool isOn)
+    private void OnLaserStateChange(Laser laser, bool isOn, bool recalculating)
     {
         beingHitByLaser = isOn;
-        if(!isOn) hittingLasers.Remove(laser);
+        if(recalculating)
+            hittingLasers.Remove(laser);
     }
 }
