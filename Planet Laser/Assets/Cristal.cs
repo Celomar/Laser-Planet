@@ -24,7 +24,7 @@ public class Cristal : MonoBehaviour
     private bool beingHitByLaser = false;
     // the mirror might be hit by a laser, but from the back
     // and it shouldn't reflect laser if that is the case
-    private bool reflectingLaser = false; 
+    private HashSet<Laser> reflectedLasers = new HashSet<Laser>();
     private HashSet<Laser> hittingLasers = new HashSet<Laser>();
 
     private void Awake()
@@ -41,7 +41,7 @@ public class Cristal : MonoBehaviour
     {
         hittingLasers.Add(laser);
         points.Add(this.firepoint);
-        
+
         Vector2 horizontalDir = this.GetDirection(true);
         Vector2 verticalDir = this.GetDirection(false);
 
@@ -63,12 +63,12 @@ public class Cristal : MonoBehaviour
             nextPoint = horizontalEndpoint;
         }
 
-        reflectingLaser = false;
+        reflectedLasers.Remove(laser);
         if(nextCristal)
         {
             nextCristal.GetLaserPoints(redirectedDirection, ref points, laser);
             laser.AddSubscriber(OnLaserStateChange);
-            reflectingLaser = true;
+            reflectedLasers.Add(laser);
         }
         // if sqrd mag > 0, it means it's not vector 0 anymore
         // which means at least one of the conditions above passed
@@ -76,7 +76,7 @@ public class Cristal : MonoBehaviour
         {
             points.Add(nextPoint);
             laser.AddSubscriber(OnLaserStateChange);
-            reflectingLaser = true;
+            reflectedLasers.Add(laser);
         }
     }
 
@@ -144,7 +144,7 @@ public class Cristal : MonoBehaviour
         Laser[] lasers = new Laser[hittingLasers.Count]; 
         hittingLasers.CopyTo(lasers);
         hittingLasers.Clear();
-        reflectingLaser = false;
+        reflectedLasers.Clear();
 
         foreach(Laser l in lasers)
             l.Shoot(Vector2.zero);
@@ -200,7 +200,7 @@ public class Cristal : MonoBehaviour
         if(recalculating)
             hittingLasers.Remove(laser);
 
-        if(isOn && reflectingLaser)
+        if(isOn && reflectedLasers.Contains(laser))
         {
             verticalLaserTrigger.CheckTrigger();
             horizontalLaserTrigger.CheckTrigger();
