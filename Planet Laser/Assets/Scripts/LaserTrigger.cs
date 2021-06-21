@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider2D))]
@@ -7,6 +8,8 @@ public class LaserTrigger : MonoBehaviour
     [System.Serializable]
     public class OnTrigger : UnityEvent<Collider2D,LaserTrigger> {}
     [SerializeField] private OnTrigger onTrigger = null;
+
+    private HashSet<Collider2D> collidersWithinTrigger = new HashSet<Collider2D>();
 
     public void CalculateTransform(Vector2 start, Vector2 end)
     {
@@ -24,6 +27,21 @@ public class LaserTrigger : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
+        collidersWithinTrigger.Add(other);
         onTrigger?.Invoke(other, this);
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        collidersWithinTrigger.Remove(other);
+    }
+
+    public void CheckTrigger()
+    {
+        if(onTrigger == null) return;
+        foreach(Collider2D collider in this.collidersWithinTrigger)
+        {
+            onTrigger.Invoke(collider,this);
+        }
     }
 }

@@ -22,6 +22,9 @@ public class Cristal : MonoBehaviour
     [SerializeField] private LaserTrigger verticalLaserTrigger = null;
 
     private bool beingHitByLaser = false;
+    // the mirror might be hit by a laser, but from the back
+    // and it shouldn't reflect laser if that is the case
+    private bool reflectingLaser = false; 
     private HashSet<Laser> hittingLasers = new HashSet<Laser>();
 
     private void Awake()
@@ -36,10 +39,9 @@ public class Cristal : MonoBehaviour
     /// <param name="laserDirection">Normalized direction of the laser</param>
     public void GetLaserPoints(Vector2 laserDirection, ref List<Vector3> points, Laser laser)
     {
-        laser.AddSubscriber(OnLaserStateChange);
         hittingLasers.Add(laser);
-
         points.Add(this.firepoint);
+        
         Vector2 horizontalDir = this.GetDirection(true);
         Vector2 verticalDir = this.GetDirection(false);
 
@@ -61,15 +63,20 @@ public class Cristal : MonoBehaviour
             nextPoint = horizontalEndpoint;
         }
 
+        reflectingLaser = false;
         if(nextCristal)
         {
             nextCristal.GetLaserPoints(redirectedDirection, ref points, laser);
+            laser.AddSubscriber(OnLaserStateChange);
+            reflectingLaser = true;
         }
         // if sqrd mag > 0, it means it's not vector 0 anymore
         // which means at least one of the conditions above passed
         else if(nextPoint.sqrMagnitude > 0.0f)
         {
             points.Add(nextPoint);
+            laser.AddSubscriber(OnLaserStateChange);
+            reflectingLaser = true;
         }
     }
 
@@ -137,6 +144,7 @@ public class Cristal : MonoBehaviour
         Laser[] lasers = new Laser[hittingLasers.Count]; 
         hittingLasers.CopyTo(lasers);
         hittingLasers.Clear();
+        reflectingLaser = false;
 
         foreach(Laser l in lasers)
             l.Shoot(Vector2.zero);
@@ -191,5 +199,11 @@ public class Cristal : MonoBehaviour
         beingHitByLaser = isOn;
         if(recalculating)
             hittingLasers.Remove(laser);
+
+        if(isOn && reflectingLaser)
+        {
+            verticalLaserTrigger.CheckTrigger();
+            horizontalLaserTrigger.CheckTrigger();
+        }
     }
 }
