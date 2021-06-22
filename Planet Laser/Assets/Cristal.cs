@@ -24,7 +24,8 @@ public class Cristal : MonoBehaviour
     private bool beingHitByLaser = false;
     // the mirror might be hit by a laser, but from the back
     // and it shouldn't reflect laser if that is the case
-    private HashSet<Laser> reflectedLasers = new HashSet<Laser>();
+    // the key is the laser and the value is if the reflected direction is horizontal
+    private Dictionary<Laser,bool> reflectedLasers = new Dictionary<Laser,bool>();
     private HashSet<Laser> hittingLasers = new HashSet<Laser>();
 
     private void Awake()
@@ -48,6 +49,9 @@ public class Cristal : MonoBehaviour
         Vector2 redirectedDirection = Vector2.zero;
         Cristal nextCristal = null;
         Vector2 nextPoint = Vector2.zero;
+        LaserTrigger laserTrigger = null;
+        if(reflectedLasers.ContainsKey(laser)) 
+            reflectedLasers.Remove(laser);
 
         // if horizontal direction and laser direction are exactly opposite
         if(Vector2.Dot(horizontalDir, laserDirection) == -1.0f)
@@ -55,20 +59,22 @@ public class Cristal : MonoBehaviour
             nextCristal = nextVerticalCristal;
             redirectedDirection = verticalDir;
             nextPoint = verticalEndpoint;
+            reflectedLasers.Add(laser, false);
+            laserTrigger = verticalLaserTrigger;
         }
         else if(Vector2.Dot(verticalDir, laserDirection) == -1.0f)
         {
             nextCristal = nextHorizontalCristal;
             redirectedDirection = horizontalDir;
             nextPoint = horizontalEndpoint;
+            reflectedLasers.Add(laser, true);
+            laserTrigger = horizontalLaserTrigger;
         }
 
-        reflectedLasers.Remove(laser);
         if(nextCristal)
         {
             nextCristal.GetLaserPoints(redirectedDirection, ref points, laser);
             laser.AddSubscriber(OnLaserStateChange);
-            reflectedLasers.Add(laser);
         }
         // if sqrd mag > 0, it means it's not vector 0 anymore
         // which means at least one of the conditions above passed
@@ -76,7 +82,11 @@ public class Cristal : MonoBehaviour
         {
             points.Add(nextPoint);
             laser.AddSubscriber(OnLaserStateChange);
-            reflectedLasers.Add(laser);
+        }
+
+        if(laserTrigger)
+        {
+            laserTrigger.AddActiveLaser(laser);
         }
     }
 
@@ -113,8 +123,19 @@ public class Cristal : MonoBehaviour
     {
         if(beingHitByLaser && other.tag == "hittable")
         {
-            Vector2 laserDirection = GetDirection(trigger == horizontalLaserTrigger);
-            other.gameObject.SendMessage("HitByRay", laserDirection);
+            bool horizontal = trigger == horizontalLaserTrigger;
+            foreach(Laser laser in trigger.lasers)
+            {
+                if(reflectedLasers.ContainsKey(laser))
+                {
+                    if(horizontal == reflectedLasers[laser])
+                    {
+                        Vector2 laserDirection = GetDirection(horizontal);
+                        other.gameObject.SendMessage("HitByRay", laserDirection);
+                        break;
+                    }
+                }
+            }
         }
     }
     
@@ -198,12 +219,18 @@ public class Cristal : MonoBehaviour
     {
         beingHitByLaser = isOn;
         if(recalculating)
-            hittingLasers.Remove(laser);
-
-        if(isOn && reflectedLasers.Contains(laser))
         {
-            verticalLaserTrigger.CheckTrigger();
-            horizontalLaserTrigger.CheckTrigger();
+            hittingLasers.Remove(laser);
+            horizontalLaserTrigger.RemoveActiveLaser(laser);
+            verticalLaserTrigger.RemoveActiveLaser(laser);
+        }
+
+        if(isOn && reflectedLasers.ContainsKey(laser))
+        {
+            if(reflectedLasers[laser])
+                horizontalLaserTrigger.CheckTrigger();
+            else
+                verticalLaserTrigger.CheckTrigger();
         }
     }
 }

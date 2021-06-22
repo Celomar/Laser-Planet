@@ -10,6 +10,7 @@ public class LaserTrigger : MonoBehaviour
     [SerializeField] private OnTrigger onTrigger = null;
 
     private HashSet<Collider2D> collidersWithinTrigger = new HashSet<Collider2D>();
+    private HashSet<Laser> activeLasers = new HashSet<Laser>();
 
     public void CalculateTransform(Vector2 start, Vector2 end)
     {
@@ -43,5 +44,20 @@ public class LaserTrigger : MonoBehaviour
         {
             onTrigger.Invoke(collider,this);
         }
+    }
+
+    public void AddActiveLaser(Laser laser)
+    {
+        activeLasers.Add(laser);
+    }
+
+    public void RemoveActiveLaser(Laser laser)
+    {
+        activeLasers.Remove(laser);
+    }
+
+    public HashSet<Laser> lasers
+    {
+        get{ return activeLasers; }
     }
 }
