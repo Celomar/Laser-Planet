@@ -21,12 +21,12 @@ public class Cristal : MonoBehaviour
     private Vector2 verticalEndpoint = Vector2.zero;
     [SerializeField] private LaserTrigger verticalLaserTrigger = null;
 
-    private bool beingHitByLaser = false;
     // the mirror might be hit by a laser, but from the back
     // and it shouldn't reflect laser if that is the case
     // the key is the laser and the value is if the reflected direction is horizontal
     private Dictionary<Laser,bool> reflectedLasers = new Dictionary<Laser,bool>();
-    private HashSet<Laser> hittingLasers = new HashSet<Laser>();
+    // key: laser; val: is laser on
+    private Dictionary<Laser,bool> hittingLasers = new Dictionary<Laser, bool>();
 
     private void Awake()
     {
@@ -40,7 +40,14 @@ public class Cristal : MonoBehaviour
     /// <param name="laserDirection">Normalized direction of the laser</param>
     public void GetLaserPoints(Vector2 laserDirection, ref List<Vector3> points, Laser laser)
     {
-        hittingLasers.Add(laser);
+        if(hittingLasers.ContainsKey(laser))
+        {
+            hittingLasers[laser] = true;
+        }
+        else
+        {
+            hittingLasers.Add(laser,true);
+        }
         points.Add(this.firepoint);
 
         Vector2 horizontalDir = this.GetDirection(true);
@@ -121,11 +128,13 @@ public class Cristal : MonoBehaviour
 
     public void OnLaserTrigger(Collider2D other, LaserTrigger trigger)
     {
-        if(beingHitByLaser && other.tag == "hittable")
+        if(other.tag == "hittable")
         {
             bool horizontal = trigger == horizontalLaserTrigger;
             foreach(Laser laser in trigger.lasers)
             {
+                if(!hittingLasers.ContainsKey(laser) || !hittingLasers[laser]) continue;
+
                 if(reflectedLasers.ContainsKey(laser))
                 {
                     if(horizontal == reflectedLasers[laser])
@@ -163,7 +172,7 @@ public class Cristal : MonoBehaviour
         
         // we have to copy the set somewhere else, because the set will change when calling shoot on laser
         Laser[] lasers = new Laser[hittingLasers.Count]; 
-        hittingLasers.CopyTo(lasers);
+        hittingLasers.Keys.CopyTo(lasers,0);
         hittingLasers.Clear();
         reflectedLasers.Clear();
 
@@ -217,7 +226,15 @@ public class Cristal : MonoBehaviour
 
     private void OnLaserStateChange(Laser laser, bool isOn, bool recalculating)
     {
-        beingHitByLaser = isOn;
+        if(hittingLasers.ContainsKey(laser))
+        {
+            hittingLasers[laser] = isOn;
+        }
+        else
+        {
+            hittingLasers.Add(laser,isOn);
+        }
+
         if(recalculating)
         {
             hittingLasers.Remove(laser);
